@@ -4,7 +4,10 @@ import domain.Celda;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class EstadoCaperucita extends SearchBasedAgentState {
@@ -30,28 +33,102 @@ public class EstadoCaperucita extends SearchBasedAgentState {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return false;
-    }
-
-    @Override
     public SearchBasedAgentState clone() {
-        return null;
+        int[][] nuevoBosque = new int[9][14];
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 14; col++) {
+                nuevoBosque[row][col] = bosque[row][col];
+            }
+        }
+
+        int[] nuevaPosicion = new int[2];
+        nuevaPosicion[0] = posicion[0];
+        nuevaPosicion[1] = posicion[1];
+
+        EstadoCaperucita nuevoEstado = new EstadoCaperucita(nuevoBosque,
+                this.getPosicionFila(), this.getPosicionColumna(), this.cantidadVidas, this.cantidadDulces);
+
+        return nuevoEstado;
     }
 
     @Override
     public void updateState(Perception p) {
+        PercepcionCaperucita percepcionCaperucita = (PercepcionCaperucita) p;
+
+        int fila = this.getPosicionFila();
+        int columna = this.getPosicionColumna();
+
+        for (int row = 0; row < 9; row++) {
+            bosque[row][columna] = percepcionCaperucita.getSensorColumna()[row];
+        }
+        for (int col = 0; col < 14; col++) {
+            bosque[fila][col] = percepcionCaperucita.getSensorFila()[col];
+        }
+
+        cantidadVidas = percepcionCaperucita.getCantidadVidas();
 
     }
 
     @Override
     public void initState() {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 14; col++) {
+                bosque[row][col] = PercepcionCaperucita.PERCEPCION_DESCONOCIDA;
+            }
+        }
 
+        this.setPosicionFila(5);
+        this.setPosicionColumna(11);
+        this.setCantidadVidas(3);
+        this.setCantidadDulces(0);
     }
 
     @Override
     public String toString() {
-        return null;
+        String str = "";
+
+        str = str + " posicion=\"(" + getPosicionFila() + "," + "" + getPosicionColumna() + ")\"";
+        str = str + " vidas=\"" + cantidadVidas + "\"\n";
+        str = str + " dulces=\"" + cantidadDulces + "\"\n";
+
+        str = str + "bosque=\"[ \n";
+        for (int row = 0; row < 9; row++) {
+            str = str + "[ ";
+            for (int col = 0; col < 14; col++) {
+                if (bosque[row][col] == -1) {
+                    str = str + "* ";
+                } else {
+                    str = str + bosque[row][col] + " ";
+                }
+            }
+            str = str + " ]\n";
+        }
+        str = str + " ]\"";
+
+        return str;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof EstadoCaperucita))
+            return false;
+
+        int[][] bosqueObj = ((EstadoCaperucita) obj).getBosque();
+        int[] posicionObj = ((EstadoCaperucita) obj).getPosicion();
+
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 14; col++) {
+                if (bosque[row][col] != bosqueObj[row][col]) {
+                    return false;
+                }
+            }
+        }
+
+        if (posicion[0] != posicionObj[0] || posicion[1] != posicionObj[1]) {
+            return false;
+        }
+
+        return true;
     }
 
     public int getPosicionFila() {
@@ -72,19 +149,21 @@ public class EstadoCaperucita extends SearchBasedAgentState {
     }
 
     public int[] getColumna(int columna){
-        int[] column = new int[bosque[0].length];
-        for(int i=0; i<column.length; i++){
-            column[i] = bosque[i][columna];
+        int[] infoColumna = new int[9];
+        for(int row = 0; row < 9; row++)
+        {
+            infoColumna[row] = bosque[row][columna];
         }
-        return column;
+        return infoColumna;
     }
 
     public int[] getFila(int fila) {
-        int[] row = new int[bosque[0].length];
-        for(int i=0; i<row.length; i++){
-            row[i] = bosque[fila][i];
+        int[] infoFila = new int[14];
+        for(int columna = 0; columna < 14; columna++)
+        {
+            infoFila[columna] = bosque[fila][columna];
         }
-        return row;
+        return infoFila;
     }
 
     public int getCantidadVidas() {
@@ -107,6 +186,10 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         return bosque;
     }
 
+    public int[] getPosicion() {
+        return posicion;
+    }
+
     public void setBosque(int[][] bosque) {
         this.bosque = bosque;
     }
@@ -116,9 +199,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
     }
 
     public boolean estaEnCampoDeFlores(){
-        int fila = this.posicion[0];
-        int columna = this.posicion[1];
 
-        return this.bosque[fila][columna] == PercepcionCaperucita.PERCEPCION_FLORES;
+        return this.bosque[posicion[0]][posicion[1]]==PercepcionCaperucita.PERCEPCION_FLORES;
     }
 }

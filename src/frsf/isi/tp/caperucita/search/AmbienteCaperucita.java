@@ -8,7 +8,15 @@ public class AmbienteCaperucita extends Environment {
 
     @Override
     public Perception getPercept() {
-        return null;
+        PercepcionCaperucita perception = new PercepcionCaperucita();
+
+        int row = this.getEnvironmentState().getPosicionAgente()[0];
+        int col = this.getEnvironmentState().getPosicionAgente()[1];
+
+        perception.setSensorColumna(this.getColumna(col));
+        perception.setSensorFila(this.getFila(row));
+
+        return perception;
     }
 
     public AmbienteCaperucita() {
@@ -26,5 +34,10 @@ public class AmbienteCaperucita extends Environment {
 
     public int[] getFila(int fila) {
         return ((EstadoAmbienteCaperucita) this.environmentState).getFila(fila);
+    }
+
+    @Override
+    public String toString() {
+        return environmentState.toString();
     }
 }

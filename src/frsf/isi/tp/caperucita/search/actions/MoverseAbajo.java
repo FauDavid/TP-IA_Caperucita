@@ -20,17 +20,22 @@ public class MoverseAbajo extends SearchAction {
     @Override
     public SearchBasedAgentState execute(SearchBasedAgentState s) {
         EstadoCaperucita estadoCaperucita = (EstadoCaperucita) s;
-        int fila = estadoCaperucita.getPosicionFila();
-        List<Integer> informacionFila = Arrays.stream(estadoCaperucita.getFila(fila)).boxed().collect(Collectors.toList());
-        informacionFila.subList(fila,9);
 
-        if (!informacionFila.contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
-            int proximaFila = fila;
-            while( !(informacionFila.contains(PercepcionCaperucita.PERCEPCION_PIEDRA) || informacionFila.contains(PercepcionCaperucita.PERCEPCION_ARBOL))){
-                proximaFila++;
+        int fila = estadoCaperucita.getPosicionFila();
+        int columna = estadoCaperucita.getPosicionColumna();
+        int[] infoColumna = estadoCaperucita.getColumna(columna);
+
+        if(infoColumna[fila + 1] != -1) {
+            if (!Collections.singletonList(infoColumna).contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
+                if (infoColumna[fila + 1] != PercepcionCaperucita.PERCEPCION_ARBOL) {
+                    if (infoColumna[fila + 1] != PercepcionCaperucita.PERCEPCION_PIEDRA) {
+                        fila = fila + 1;
+                    }
+                }
             }
-            estadoCaperucita.setPosicionFila(proximaFila);
         }
+
+        estadoCaperucita.setPosicionFila(fila);
 
         return estadoCaperucita;
     }
@@ -38,32 +43,35 @@ public class MoverseAbajo extends SearchAction {
     @Override
     public EnvironmentState execute(AgentState ast, EnvironmentState est) {
         EstadoAmbienteCaperucita estadoAmbiente = (EstadoAmbienteCaperucita) est;
-        EstadoCaperucita estadoCaperucita = ((EstadoCaperucita) ast);
-        int fila = estadoCaperucita.getPosicionFila();
-        List<Integer> informacionFila = Arrays.stream(estadoCaperucita.getFila(fila)).boxed().collect(Collectors.toList());
-        informacionFila.subList(fila,9);
+        EstadoCaperucita estadoCaperucita = (EstadoCaperucita) ast;
 
-        if (!informacionFila.contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
-            int proximaFila = fila;
-            while( !(informacionFila.contains(PercepcionCaperucita.PERCEPCION_PIEDRA) || informacionFila.contains(PercepcionCaperucita.PERCEPCION_ARBOL))){
-                proximaFila++;
+        int fila = estadoCaperucita.getPosicionFila();
+        int columna = estadoCaperucita.getPosicionColumna();
+        int[] infoColumna = estadoCaperucita.getColumna(columna);
+
+        if(infoColumna[fila + 1] != -1) {
+            if (!Collections.singletonList(infoColumna).contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
+                if (infoColumna[fila + 1] != PercepcionCaperucita.PERCEPCION_ARBOL) {
+                    if (infoColumna[fila + 1] != PercepcionCaperucita.PERCEPCION_PIEDRA) {
+                        fila = fila + 1;
+                    }
+                }
             }
-            estadoCaperucita.setPosicionFila(proximaFila);
         }
 
-        estadoAmbiente.setPosicionAgente(new int[] {estadoCaperucita.getPosicionFila(),estadoCaperucita.getPosicionColumna()});
-
+        estadoCaperucita.setPosicionFila(fila);
+        estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
         return estadoAmbiente;
 
     }
 
     @Override
     public String toString() {
-        return null;
+        return "MoverseAbajo";
     }
 
     @Override
     public Double getCost() {
-        return null;
+        return new Double(0);
     }
 }

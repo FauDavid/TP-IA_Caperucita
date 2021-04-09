@@ -4,8 +4,11 @@ import frsf.cidisi.faia.agent.Agent;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
 
+import java.util.Arrays;
+
 public class PercepcionCaperucita extends Perception {
 
+    public static int PERCEPCION_DESCONOCIDA = -1;
     public static int PERCEPCION_VACIO = 0;
     public static int PERCEPCION_ARBOL = 1;
     public static int PERCEPCION_DULCE = 2;
@@ -14,10 +17,10 @@ public class PercepcionCaperucita extends Perception {
     public static int PERCEPCION_LOBO = 5;
 
     private int[] sensorColumna;
-
-
     private int[] sensorFila;
+
     private int cantidadVidas;
+    private int cantidadDulces;
 
     public PercepcionCaperucita() {
         cantidadVidas = 3;
@@ -65,5 +68,28 @@ public class PercepcionCaperucita extends Perception {
         this.cantidadVidas = cantidadVidas;
     }
 
+    public int getCantidadDulces() {
+        return cantidadDulces;
+    }
+
+    public void setCantidadDulces(int cantidadDulces) {
+        this.cantidadDulces = cantidadDulces;
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer str = new StringBuffer();
+
+        str.append("Vidas: " + this.cantidadVidas);
+        str.append("; ");
+        str.append("InformacionColumna: " + Arrays.toString(this.sensorColumna));
+        str.append("; ");
+        str.append("InformacionFila: " + Arrays.toString(this.sensorFila));
+        str.append("; ");
+        str.append("Dulces: " + this.cantidadDulces);
+        str.append("; ");
+
+        return str.toString();
+    }
 
 }
