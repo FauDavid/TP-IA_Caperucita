@@ -9,10 +9,7 @@ import frsf.isi.tp.caperucita.search.EstadoCaperucita;
 import frsf.isi.tp.caperucita.search.PercepcionCaperucita;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,14 +23,8 @@ public class MoverseIzquierda extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
 
-        if(infoFila[columna - 1] != -1) {
-            if (!Collections.singletonList(infoFila).contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
-                if ((infoFila[columna - 1] != PercepcionCaperucita.PERCEPCION_ARBOL)) {
-                    if ((infoFila[columna - 1] != PercepcionCaperucita.PERCEPCION_PIEDRA)) {
-                        columna = columna - 1;
-                    }
-                }
-            }
+        if (!estadoCaperucita.hayLobo(infoFila)) {
+            columna = columna - estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
         }
 
         estadoCaperucita.setPosicionColumna(columna);
@@ -50,18 +41,11 @@ public class MoverseIzquierda extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
 
-        if(infoFila[columna - 1] != -1) {
-            if (!Collections.singletonList(infoFila).contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
-                if ((infoFila[columna - 1] != PercepcionCaperucita.PERCEPCION_ARBOL)) {
-                    if ((infoFila[columna - 1] != PercepcionCaperucita.PERCEPCION_PIEDRA)) {
-                        columna = columna - 1;
-                    }
-                }
-            }
+        if (!estadoCaperucita.hayLobo(infoFila)) {
+            columna = columna - estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
         }
 
         estadoCaperucita.setPosicionColumna(columna);
-
         estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
 
         return estadoAmbiente;

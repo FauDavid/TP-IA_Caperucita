@@ -1,6 +1,5 @@
 package frsf.isi.tp.caperucita.search;
 
-import domain.Celda;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 
@@ -9,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class EstadoCaperucita extends SearchBasedAgentState {
     private int[][] bosque;
@@ -27,7 +27,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
 
     public EstadoCaperucita(int[][] bosque, int fila, int columna, int cantidadVidas, int cantidadDulces) {
         this.bosque = bosque;
-        this.posicion = new int[]{fila,columna};
+        this.posicion = new int[]{fila, columna};
         this.cantidadVidas = cantidadVidas;
         this.cantidadDulces = cantidadDulces;
     }
@@ -35,6 +35,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
     @Override
     public SearchBasedAgentState clone() {
         int[][] nuevoBosque = new int[9][14];
+
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 14; col++) {
                 nuevoBosque[row][col] = bosque[row][col];
@@ -45,8 +46,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         nuevaPosicion[0] = posicion[0];
         nuevaPosicion[1] = posicion[1];
 
-        EstadoCaperucita nuevoEstado = new EstadoCaperucita(nuevoBosque,
-                this.getPosicionFila(), this.getPosicionColumna(), this.cantidadVidas, this.cantidadDulces);
+        EstadoCaperucita nuevoEstado = new EstadoCaperucita(nuevoBosque, this.getPosicionFila(), this.getPosicionColumna(), this.cantidadVidas, this.cantidadDulces);
 
         return nuevoEstado;
     }
@@ -88,8 +88,8 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         String str = "";
 
         str = str + " posicion=\"(" + getPosicionFila() + "," + "" + getPosicionColumna() + ")\"";
-        str = str + " vidas=\"" + cantidadVidas + "\"\n";
-        str = str + " dulces=\"" + cantidadDulces + "\"\n";
+        str = str + " vidas=\"" + cantidadVidas + "\"";
+        str = str + " dulces=\"" + cantidadDulces + "\" ";
 
         str = str + "bosque=\"[ \n";
         for (int row = 0; row < 9; row++) {
@@ -148,10 +148,9 @@ public class EstadoCaperucita extends SearchBasedAgentState {
 
     }
 
-    public int[] getColumna(int columna){
+    public int[] getColumna(int columna) {
         int[] infoColumna = new int[9];
-        for(int row = 0; row < 9; row++)
-        {
+        for (int row = 0; row < 9; row++) {
             infoColumna[row] = bosque[row][columna];
         }
         return infoColumna;
@@ -159,8 +158,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
 
     public int[] getFila(int fila) {
         int[] infoFila = new int[14];
-        for(int columna = 0; columna < 14; columna++)
-        {
+        for (int columna = 0; columna < 14; columna++) {
             infoFila[columna] = bosque[fila][columna];
         }
         return infoFila;
@@ -194,12 +192,64 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         this.bosque = bosque;
     }
 
+    public int getPosicionBosque(int row, int col) {
+        return this.bosque[row][col];
+    }
+
     public void setPosicionBosque(int row, int col, int percepcionVacio) {
         this.bosque[row][col] = percepcionVacio;
     }
 
-    public boolean estaEnCampoDeFlores(){
+    public boolean estaEnCampoDeFlores() {
+        return this.bosque[posicion[0]][posicion[1]] == PercepcionCaperucita.PERCEPCION_FLORES;
+    }
 
-        return this.bosque[posicion[0]][posicion[1]]==PercepcionCaperucita.PERCEPCION_FLORES;
+    public boolean hayLobo(int[] info){
+        List<Integer> intList = new ArrayList<Integer>(info.length);
+        for (int i : info)
+        {
+            intList.add(i);
+        }
+        return intList.contains(PercepcionCaperucita.PERCEPCION_LOBO);
+    }
+
+    public int moverse(int[] info, int valor, String orientacion){
+        int posicionAMoverse = 0;
+
+        List<Integer> intList = new ArrayList<Integer>(info.length);
+        for (int i : info)
+        {
+            intList.add(i);
+        }
+        List<Integer> intList_recortada = new ArrayList<Integer>();
+
+        if(orientacion.equals("ABAJO")) {
+            intList_recortada = intList.subList(valor+1, info.length);
+            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> i.equals(PercepcionCaperucita.PERCEPCION_ARBOL)).count();
+        }
+
+        if(orientacion.equals("ARRIBA")) {
+            intList_recortada = intList.subList(0, valor);
+            Collections.reverse(intList_recortada);
+            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> i.equals(PercepcionCaperucita.PERCEPCION_ARBOL)).count();
+        }
+
+        if(orientacion.equals("DERECHA")) {
+            intList_recortada = intList.subList(valor+1, info.length);
+            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> i.equals(PercepcionCaperucita.PERCEPCION_ARBOL)).count();
+        }
+
+        if(orientacion.equals("IZQUIERDA")) {
+            intList_recortada = intList.subList(0, valor);
+            Collections.reverse(intList_recortada);
+            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> i.equals(PercepcionCaperucita.PERCEPCION_ARBOL)).count();
+        }
+
+        return posicionAMoverse;
+    }
+
+
+    public void incrementarDulces(Double cost) {
+        this.cantidadDulces+=cost;
     }
 }

@@ -5,6 +5,7 @@ import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.Problem;
 import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgent;
+import frsf.cidisi.faia.solver.search.BreathFirstSearch;
 import frsf.cidisi.faia.solver.search.DepthFirstSearch;
 import frsf.cidisi.faia.solver.search.Search;
 import frsf.isi.tp.caperucita.search.actions.*;
@@ -24,11 +25,12 @@ public class AgenteCaperucita extends SearchBasedAgent {
         this.setAgentState(estadoCaperucita);
 
         Vector<SearchAction> operadores = new Vector<SearchAction>();
-        operadores.addElement(new MoverseAbajo());
+        operadores.addElement(new TomarDulce());
         operadores.addElement(new MoverseArriba());
-        operadores.addElement(new MoverseDerecha());
         operadores.addElement(new MoverseIzquierda());
-//      operadores.addElement(new TomarDulce());
+        operadores.addElement(new MoverseAbajo());
+        operadores.addElement(new MoverseDerecha());
+
 
         Problem problem = new Problem(objetivoCaperucita, estadoCaperucita, operadores);
         this.setProblem(problem);
@@ -38,17 +40,12 @@ public class AgenteCaperucita extends SearchBasedAgent {
     @Override
     public Action selectAction() {
         DepthFirstSearch strategy = new DepthFirstSearch();
-
         Search searchSolver = new Search(strategy);
-
         searchSolver.setVisibleTree(Search.EFAIA_TREE);
-
         this.setSolver(searchSolver);
-
         Action selectedAction = null;
         try {
-            selectedAction =
-                    this.getSolver().solve(new Object[]{this.getProblem()});
+            selectedAction = this.getSolver().solve(new Object[]{this.getProblem()});
         } catch (Exception ex) {
             Logger.getLogger(AgenteCaperucita.class.getName()).log(Level.SEVERE, null, ex);
         }

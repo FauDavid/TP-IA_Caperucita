@@ -87,7 +87,6 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         this.setCantidadDulcesAgente(0);
     }
 
-
     @Override
     public String toString() {
         String str = "";

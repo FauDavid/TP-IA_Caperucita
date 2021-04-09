@@ -18,9 +18,7 @@ public class PercepcionCaperucita extends Perception {
 
     private int[] sensorColumna;
     private int[] sensorFila;
-
     private int cantidadVidas;
-    private int cantidadDulces;
 
     public PercepcionCaperucita() {
         cantidadVidas = 3;
@@ -68,14 +66,6 @@ public class PercepcionCaperucita extends Perception {
         this.cantidadVidas = cantidadVidas;
     }
 
-    public int getCantidadDulces() {
-        return cantidadDulces;
-    }
-
-    public void setCantidadDulces(int cantidadDulces) {
-        this.cantidadDulces = cantidadDulces;
-    }
-
     @Override
     public String toString() {
         StringBuffer str = new StringBuffer();
@@ -85,8 +75,6 @@ public class PercepcionCaperucita extends Perception {
         str.append("InformacionColumna: " + Arrays.toString(this.sensorColumna));
         str.append("; ");
         str.append("InformacionFila: " + Arrays.toString(this.sensorFila));
-        str.append("; ");
-        str.append("Dulces: " + this.cantidadDulces);
         str.append("; ");
 
         return str.toString();

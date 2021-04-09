@@ -22,14 +22,8 @@ public class MoverseDerecha extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
 
-        if(infoFila[columna + 1] != -1) {
-            if (!Collections.singletonList(infoFila).contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
-                if ((infoFila[columna + 1] != PercepcionCaperucita.PERCEPCION_ARBOL)) {
-                    if ((infoFila[columna + 1] != PercepcionCaperucita.PERCEPCION_PIEDRA)) {
-                        columna = columna + 1;
-                    }
-                }
-            }
+        if (!estadoCaperucita.hayLobo(infoFila)) {
+            columna = columna + estadoCaperucita.moverse(infoFila, columna, "DERECHA");
         }
 
         estadoCaperucita.setPosicionColumna(columna);
@@ -46,14 +40,8 @@ public class MoverseDerecha extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
 
-        if(infoFila[columna + 1] != -1) {
-            if (!Collections.singletonList(infoFila).contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
-                if ((infoFila[columna + 1] != PercepcionCaperucita.PERCEPCION_ARBOL)) {
-                    if ((infoFila[columna + 1] != PercepcionCaperucita.PERCEPCION_PIEDRA)) {
-                        columna = columna + 1;
-                    }
-                }
-            }
+        if (!estadoCaperucita.hayLobo(infoFila)) {
+            columna = columna + estadoCaperucita.moverse(infoFila, columna, "DERECHA");
         }
 
         estadoCaperucita.setPosicionColumna(columna);
@@ -66,7 +54,6 @@ public class MoverseDerecha extends SearchAction {
     public String toString() {
         return "MoverseDerecha";
     }
-
 
 
     @Override

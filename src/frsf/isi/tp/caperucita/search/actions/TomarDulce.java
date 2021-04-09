@@ -19,7 +19,9 @@ public class TomarDulce extends SearchAction {
 
         if (estadoCaperucita.getBosque()[row][col] == PercepcionCaperucita.PERCEPCION_DULCE) {
             estadoCaperucita.setPosicionBosque(row, col, PercepcionCaperucita.PERCEPCION_VACIO);
-            estadoCaperucita.setCantidadDulces(estadoCaperucita.getCantidadDulces()+1);
+
+            estadoCaperucita.incrementarDulces(this.getCost());
+
             return estadoCaperucita;
         }
         return null;
@@ -33,9 +35,13 @@ public class TomarDulce extends SearchAction {
         int row = estadoAmbienteCaperucita.getPosicionAgente()[0];
         int col = estadoAmbienteCaperucita.getPosicionAgente()[1];
 
-        if (estadoAmbienteCaperucita.getBosque()[row][col] == PercepcionCaperucita.PERCEPCION_DULCE) {
+        if (estadoCaperucita.getBosque()[row][col] == PercepcionCaperucita.PERCEPCION_DULCE) {
             estadoAmbienteCaperucita.setPosicionBosque(row, col, PercepcionCaperucita.PERCEPCION_VACIO);
+            estadoAmbienteCaperucita.setCantidadDulcesAgente(estadoCaperucita.getCantidadDulces());
+
             estadoCaperucita.setPosicionBosque(row, col, PercepcionCaperucita.PERCEPCION_VACIO);
+            estadoCaperucita.incrementarDulces(this.getCost());
+
             return estadoAmbienteCaperucita;
         }
 
@@ -49,6 +55,6 @@ public class TomarDulce extends SearchAction {
 
     @Override
     public Double getCost() {
-        return new Double(0);
+        return new Double(1);
     }
 }
