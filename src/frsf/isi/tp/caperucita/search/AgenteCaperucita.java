@@ -21,8 +21,9 @@ public class AgenteCaperucita extends SearchBasedAgent {
 
         ObjetivoCaperucita objetivoCaperucita = new ObjetivoCaperucita();
 
-        EstadoCaperucita estadoCaperucita = new EstadoCaperucita();
-        this.setAgentState(estadoCaperucita);
+        EstadoCaperucita estado = new EstadoCaperucita();
+
+        this.setAgentState(estado);
 
         Vector<SearchAction> operadores = new Vector<SearchAction>();
         operadores.addElement(new TomarDulce());
@@ -31,7 +32,7 @@ public class AgenteCaperucita extends SearchBasedAgent {
         operadores.addElement(new MoverseAbajo());
         operadores.addElement(new MoverseDerecha());
 
-
+        EstadoCaperucita estadoCaperucita = (EstadoCaperucita) this.getAgentState();
         Problem problem = new Problem(objetivoCaperucita, estadoCaperucita, operadores);
         this.setProblem(problem);
 
@@ -41,7 +42,7 @@ public class AgenteCaperucita extends SearchBasedAgent {
     public Action selectAction() {
         DepthFirstSearch strategy = new DepthFirstSearch();
         Search searchSolver = new Search(strategy);
-        searchSolver.setVisibleTree(Search.EFAIA_TREE);
+        searchSolver.setVisibleTree(Search.XML_TREE);
         this.setSolver(searchSolver);
         Action selectedAction = null;
         try {
@@ -49,8 +50,6 @@ public class AgenteCaperucita extends SearchBasedAgent {
         } catch (Exception ex) {
             Logger.getLogger(AgenteCaperucita.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
         return selectedAction;
     }
 
@@ -58,5 +57,6 @@ public class AgenteCaperucita extends SearchBasedAgent {
     public void see(Perception p) {
         this.getAgentState().updateState(p);
     }
+
 
 }

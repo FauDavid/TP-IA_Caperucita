@@ -1,10 +1,10 @@
 package frsf.isi.tp.caperucita.search;
 
+import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
 
 public class AmbienteCaperucita extends Environment {
-
 
     @Override
     public Perception getPercept() {
@@ -40,4 +40,12 @@ public class AmbienteCaperucita extends Environment {
     public String toString() {
         return environmentState.toString();
     }
+
+    @Override
+    public boolean agentFailed(Action actionReturned) {
+        EstadoAmbienteCaperucita estadoAmbienteCaperucita = this.getEnvironmentState();
+        int vidasAgente = estadoAmbienteCaperucita.getCantidadVidasAgente();
+        return vidasAgente == 0;
+    }
+
 }

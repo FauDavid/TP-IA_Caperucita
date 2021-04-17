@@ -9,10 +9,7 @@ import frsf.isi.tp.caperucita.search.EstadoCaperucita;
 import frsf.isi.tp.caperucita.search.PercepcionCaperucita;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MoverseAbajo extends SearchAction {
@@ -20,14 +17,11 @@ public class MoverseAbajo extends SearchAction {
     @Override
     public SearchBasedAgentState execute(SearchBasedAgentState s) {
         EstadoCaperucita estadoCaperucita = (EstadoCaperucita) s;
-
         int fila = estadoCaperucita.getPosicionFila();
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoColumna = estadoCaperucita.getColumna(columna);
 
-        if (!estadoCaperucita.hayLobo(infoColumna)) {
-           fila = fila + estadoCaperucita.moverse(infoColumna,fila,"ABAJO");
-        }
+        fila = fila + estadoCaperucita.moverse(infoColumna, fila, "ABAJO");
 
         estadoCaperucita.setPosicionFila(fila);
 
@@ -43,12 +37,11 @@ public class MoverseAbajo extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoColumna = estadoCaperucita.getColumna(columna);
 
-        if (!estadoCaperucita.hayLobo(infoColumna)) {
-            fila = fila + estadoCaperucita.moverse(infoColumna,fila,"ABAJO");
-        }
+        fila = fila + estadoCaperucita.moverse(infoColumna, fila, "ABAJO");
 
         estadoCaperucita.setPosicionFila(fila);
         estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
+
         return estadoAmbiente;
 
     }

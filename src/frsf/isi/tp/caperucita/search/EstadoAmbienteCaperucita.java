@@ -1,5 +1,6 @@
 package frsf.isi.tp.caperucita.search;
 
+import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.state.EnvironmentState;
 
 public class EstadoAmbienteCaperucita extends EnvironmentState {
@@ -8,8 +9,11 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
     private int cantidadVidasAgente;
     private int cantidadDulcesAgente;
 
-    public EstadoAmbienteCaperucita(int[][] m) {
-        bosque = m;
+    public EstadoAmbienteCaperucita(int[][] bosque, int[] posicionAgente, int cantidadVidasAgente, int cantidadDulcesAgente) {
+        this.bosque = bosque;
+        this.posicionAgente = posicionAgente;
+        this.cantidadVidasAgente = cantidadVidasAgente;
+        this.cantidadDulcesAgente = cantidadDulcesAgente;
     }
 
     public EstadoAmbienteCaperucita() {
@@ -24,6 +28,16 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
                 bosque[row][col] = PercepcionCaperucita.PERCEPCION_ARBOL;
             }
         }
+
+        escenario1();
+        //escenario2();
+        //escenario3();
+
+        this.setCantidadVidasAgente(3);
+        this.setCantidadDulcesAgente(0);
+    }
+
+    private void escenario1() {
 
         //Escenario 1
         bosque[1][3] = PercepcionCaperucita.PERCEPCION_DULCE;
@@ -83,8 +97,125 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         bosque[8][9] = PercepcionCaperucita.PERCEPCION_PIEDRA;
 
         this.setPosicionAgente(new int[]{5, 11});
-        this.setCantidadVidasAgente(3);
-        this.setCantidadDulcesAgente(0);
+    }
+
+    private void escenario2() {
+
+        //Escenario 2
+        bosque[1][5] = PercepcionCaperucita.PERCEPCION_DULCE;
+        bosque[1][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[2][4] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][9] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[3][3] = PercepcionCaperucita.PERCEPCION_PIEDRA;
+        bosque[3][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][7] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][8] = PercepcionCaperucita.PERCEPCION_DULCE;
+        bosque[3][9] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[4][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][10] = PercepcionCaperucita.PERCEPCION_DULCE;
+
+        bosque[5][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][4] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][9] = PercepcionCaperucita.PERCEPCION_PIEDRA;
+        bosque[5][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[6][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][4] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][7] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[7][6] = PercepcionCaperucita.PERCEPCION_FLORES;
+        bosque[7][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[7][9] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[7][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[8][6] = PercepcionCaperucita.PERCEPCION_FLORES;
+
+        this.setPosicionAgente(new int[]{6, 3});
+    }
+
+    private void escenario3() {
+
+        //Escenario 3
+        bosque[0][3] = PercepcionCaperucita.PERCEPCION_FLORES;
+
+        bosque[1][3] = PercepcionCaperucita.PERCEPCION_FLORES;
+        bosque[1][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[1][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[1][7] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[2][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][6] = PercepcionCaperucita.PERCEPCION_PIEDRA;
+        bosque[2][7] = PercepcionCaperucita.PERCEPCION_DULCE;
+
+        bosque[3][2] = PercepcionCaperucita.PERCEPCION_PIEDRA;
+        bosque[3][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][4] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][7] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[4][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][7] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][9] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][11] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[5][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][4] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][11] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[6][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][4] = PercepcionCaperucita.PERCEPCION_DULCE;
+        bosque[6][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][8] = PercepcionCaperucita.PERCEPCION_DULCE;
+        bosque[6][9] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][10] = PercepcionCaperucita.PERCEPCION_PIEDRA;
+        bosque[6][11] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[7][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[7][7] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[7][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        this.setPosicionAgente(new int[]{4, 11});
+    }
+
+    public Object clone() {
+        int[][] nuevoBosque = new int[9][14];
+
+        for (int fil = 0; fil < 8; fil++) {
+            for (int col = 0; col < 13; col++) {
+                nuevoBosque[fil][col] = this.bosque[fil][col];
+            }
+        }
+
+        EstadoAmbienteCaperucita nuevoEstado = new EstadoAmbienteCaperucita(nuevoBosque, this.posicionAgente, this.cantidadVidasAgente, this.cantidadDulcesAgente);
+
+        return nuevoEstado;
     }
 
     @Override
@@ -155,5 +286,6 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
     public void setCantidadDulcesAgente(int cantidadDulcesAgente) {
         this.cantidadDulcesAgente = cantidadDulcesAgente;
     }
+
 
 }

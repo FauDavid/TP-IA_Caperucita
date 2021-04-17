@@ -23,9 +23,7 @@ public class MoverseIzquierda extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
 
-        if (!estadoCaperucita.hayLobo(infoFila)) {
-            columna = columna - estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
-        }
+        columna = columna - estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
 
         estadoCaperucita.setPosicionColumna(columna);
 
@@ -41,7 +39,7 @@ public class MoverseIzquierda extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
 
-        if (!estadoCaperucita.hayLobo(infoFila)) {
+        if (fila < 9 && columna < 14) {
             columna = columna - estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
         }
 

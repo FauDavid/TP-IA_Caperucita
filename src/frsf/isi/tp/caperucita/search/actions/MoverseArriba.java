@@ -24,12 +24,10 @@ public class MoverseArriba extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoColumna = estadoCaperucita.getColumna(columna);
 
-        if (!estadoCaperucita.hayLobo(infoColumna)) {
-            fila = fila - estadoCaperucita.moverse(infoColumna,fila,"ARRIBA");;
-        }
-
+        fila = fila - estadoCaperucita.moverse(infoColumna, fila, "ARRIBA");
 
         estadoCaperucita.setPosicionFila(fila);
+
         return estadoCaperucita;
     }
 
@@ -42,9 +40,7 @@ public class MoverseArriba extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoColumna = estadoCaperucita.getColumna(columna);
 
-        if (!estadoCaperucita.hayLobo(infoColumna)) {
-            fila = fila -  estadoCaperucita.moverse(infoColumna,fila,"ARRIBA");;
-        }
+        fila = fila - estadoCaperucita.moverse(infoColumna, fila, "ARRIBA");
 
         estadoCaperucita.setPosicionFila(fila);
         estadoAmbiente.setPosicionAgente(new int[]{fila, columna});

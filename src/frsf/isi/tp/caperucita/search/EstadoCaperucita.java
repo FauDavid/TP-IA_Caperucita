@@ -204,6 +204,10 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         return this.bosque[posicion[0]][posicion[1]] == PercepcionCaperucita.PERCEPCION_FLORES;
     }
 
+    public boolean hayObstaculo() {
+        return ((this.bosque[posicion[0]][posicion[1]] == PercepcionCaperucita.PERCEPCION_ARBOL) || (this.bosque[posicion[0]][posicion[1]] == PercepcionCaperucita.PERCEPCION_PIEDRA));
+    }
+
     public boolean hayLobo(int[] info){
         List<Integer> intList = new ArrayList<Integer>(info.length);
         for (int i : info)
@@ -213,43 +217,70 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         return intList.contains(PercepcionCaperucita.PERCEPCION_LOBO);
     }
 
-    public int moverse(int[] info, int valor, String orientacion){
+    public int moverse(int[] info, int valor, String orientacion) {
         int posicionAMoverse = 0;
 
+        int[] percepcionesValidas = new int[]{PercepcionCaperucita.PERCEPCION_FLORES, PercepcionCaperucita.PERCEPCION_VACIO, PercepcionCaperucita.PERCEPCION_DULCE};
+
         List<Integer> intList = new ArrayList<Integer>(info.length);
-        for (int i : info)
-        {
+        for (int i : info) {
             intList.add(i);
         }
         List<Integer> intList_recortada = new ArrayList<Integer>();
 
         if(orientacion.equals("ABAJO")) {
             intList_recortada = intList.subList(valor+1, info.length);
-            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> i.equals(PercepcionCaperucita.PERCEPCION_ARBOL)).count();
+            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
+
         }
 
         if(orientacion.equals("ARRIBA")) {
             intList_recortada = intList.subList(0, valor);
             Collections.reverse(intList_recortada);
-            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> i.equals(PercepcionCaperucita.PERCEPCION_ARBOL)).count();
+            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
         }
 
         if(orientacion.equals("DERECHA")) {
             intList_recortada = intList.subList(valor+1, info.length);
-            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> i.equals(PercepcionCaperucita.PERCEPCION_ARBOL)).count();
+            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
         }
 
         if(orientacion.equals("IZQUIERDA")) {
             intList_recortada = intList.subList(0, valor);
             Collections.reverse(intList_recortada);
-            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> i.equals(PercepcionCaperucita.PERCEPCION_ARBOL)).count();
+            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
         }
 
         return posicionAMoverse;
     }
 
-
     public void incrementarDulces(Double cost) {
         this.cantidadDulces+=cost;
+    }
+
+    public boolean tieneVidas() {
+        return (this.cantidadVidas > 0);
+    }
+
+    public boolean recorrioTodoElBosque() {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 14; col++) {
+                if (bosque[row][col] == PercepcionCaperucita.PERCEPCION_DESCONOCIDA) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean faltanDulces() {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col <14; col++) {
+                if (bosque[row][col] == PercepcionCaperucita.PERCEPCION_DULCE) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

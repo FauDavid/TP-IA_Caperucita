@@ -8,11 +8,6 @@ import frsf.isi.tp.caperucita.search.EstadoAmbienteCaperucita;
 import frsf.isi.tp.caperucita.search.EstadoCaperucita;
 import frsf.isi.tp.caperucita.search.PercepcionCaperucita;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class MoverseDerecha extends SearchAction {
 
     @Override
@@ -22,9 +17,7 @@ public class MoverseDerecha extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
 
-        if (!estadoCaperucita.hayLobo(infoFila)) {
-            columna = columna + estadoCaperucita.moverse(infoFila, columna, "DERECHA");
-        }
+        columna = columna + estadoCaperucita.moverse(infoFila, columna, "DERECHA");
 
         estadoCaperucita.setPosicionColumna(columna);
 
@@ -40,7 +33,7 @@ public class MoverseDerecha extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
 
-        if (!estadoCaperucita.hayLobo(infoFila)) {
+        if (fila < 9 && columna < 14) {
             columna = columna + estadoCaperucita.moverse(infoFila, columna, "DERECHA");
         }
 
