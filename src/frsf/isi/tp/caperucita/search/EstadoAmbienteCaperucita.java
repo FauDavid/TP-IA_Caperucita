@@ -8,12 +8,16 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
     private int[] posicionAgente;
     private int cantidadVidasAgente;
     private int cantidadDulcesAgente;
+    private int[] posicionLobo;
+    private int[] posicionFlores;
 
-    public EstadoAmbienteCaperucita(int[][] bosque, int[] posicionAgente, int cantidadVidasAgente, int cantidadDulcesAgente) {
+    public EstadoAmbienteCaperucita(int[][] bosque, int[] posicionAgente, int[] posicionFlores, int[] posicionLobo, int cantidadVidasAgente, int cantidadDulcesAgente) {
         this.bosque = bosque;
         this.posicionAgente = posicionAgente;
         this.cantidadVidasAgente = cantidadVidasAgente;
         this.cantidadDulcesAgente = cantidadDulcesAgente;
+        this.posicionFlores = posicionFlores;
+        this.posicionLobo = posicionLobo;
     }
 
     public EstadoAmbienteCaperucita() {
@@ -96,6 +100,8 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
 
         bosque[8][9] = PercepcionCaperucita.PERCEPCION_PIEDRA;
 
+        this.setPosicionLobo(new int[]{6,4});
+        this.setPosicionFlores(new int[]{7,7});
         this.setPosicionAgente(new int[]{5, 11});
     }
 
@@ -213,26 +219,67 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
             }
         }
 
-        EstadoAmbienteCaperucita nuevoEstado = new EstadoAmbienteCaperucita(nuevoBosque, this.posicionAgente, this.cantidadVidasAgente, this.cantidadDulcesAgente);
+        EstadoAmbienteCaperucita nuevoEstado = new EstadoAmbienteCaperucita(nuevoBosque, this.posicionAgente, this.posicionFlores, this.posicionLobo, this.cantidadVidasAgente, this.cantidadDulcesAgente);
 
         return nuevoEstado;
     }
 
+    public int[] getPosicionLobo() {
+        return posicionLobo;
+    }
+
+    public void setPosicionLobo(int[] posicionLobo) {
+        this.posicionLobo = posicionLobo;
+    }
+
+    public int[] getPosicionFlores() {
+        return posicionFlores;
+    }
+
+    public void setPosicionFlores(int[] posicionFlores) {
+        this.posicionFlores = posicionFlores;
+    }
+
     @Override
     public String toString() {
-        String str = "";
+        StringBuilder str = new StringBuilder();
 
-        str = str + "[ \n";
+        str.append(" \n");
         for (int row = 0; row < 9; row++) {
-            str = str + "[ ";
+            str.append(" ");
             for (int col = 0; col < 14; col++) {
-                str = str + bosque[row][col] + " ";
+                if (bosque[row][col] == 0) {
+                    if(getPosicionAgente()[0]==row && getPosicionAgente()[1]==col){
+                        str.append("\uD83D\uDC67 ");
+                    }
+                    else{
+                        str.append("\uD83D\uDD73 ");
+                    }
+                }
+                if (bosque[row][col] == 1) {
+                    str.append("\uD83C\uDF32 ");
+                }
+                if (bosque[row][col] == 2) {
+                    str.append("\uD83C\uDF69 ");
+                }
+                if (bosque[row][col] == 3) {
+                    str.append("\uD83D\uDDFF ");
+                }
+                if (bosque[row][col] == 4) {
+                    str.append("\uD83C\uDF3A ");
+                }
+                if (bosque[row][col] == 5) {
+                    str.append("\uD83D\uDC3A ");
+                }
+                if (bosque[row][col] == -1) {
+                    str.append("❔ ");
+                }
             }
-            str = str + " ]\n";
+            str.append(" \n");
         }
-        str = str + " ]";
 
-        return str;
+
+        return str.toString();
     }
 
     public int[] getColumna(int columna){

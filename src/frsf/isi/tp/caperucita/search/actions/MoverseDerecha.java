@@ -33,9 +33,7 @@ public class MoverseDerecha extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
 
-        if (fila < 9 && columna < 14) {
-            columna = columna + estadoCaperucita.moverse(infoFila, columna, "DERECHA");
-        }
+        columna = columna + estadoCaperucita.moverse(infoFila, columna, "DERECHA");
 
         estadoCaperucita.setPosicionColumna(columna);
         estadoAmbiente.setPosicionAgente(new int[]{fila, columna});

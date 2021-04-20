@@ -7,7 +7,9 @@ public class ObjetivoCaperucita extends GoalTest {
 
     @Override
     public boolean isGoalState(AgentState estadoAgente) {
-        return (((EstadoCaperucita) estadoAgente).estaEnCampoDeFlores() && ((EstadoCaperucita) estadoAgente).getCantidadVidas() > 0);
+        if(((EstadoCaperucita) estadoAgente).estaEnFlores()){
+            return true;
+        }
+        return false;
     }
-
 }

@@ -4,6 +4,8 @@ import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
 
+import java.util.Arrays;
+
 public class AmbienteCaperucita extends Environment {
 
     @Override
@@ -15,6 +17,7 @@ public class AmbienteCaperucita extends Environment {
 
         perception.setSensorColumna(this.getColumna(col));
         perception.setSensorFila(this.getFila(row));
+        perception.setPosicionFlores(this.getEnvironmentState().getPosicionFlores());
 
         return perception;
     }
@@ -39,13 +42,6 @@ public class AmbienteCaperucita extends Environment {
     @Override
     public String toString() {
         return environmentState.toString();
-    }
-
-    @Override
-    public boolean agentFailed(Action actionReturned) {
-        EstadoAmbienteCaperucita estadoAmbienteCaperucita = this.getEnvironmentState();
-        int vidasAgente = estadoAmbienteCaperucita.getCantidadVidasAgente();
-        return vidasAgente == 0;
     }
 
 }
