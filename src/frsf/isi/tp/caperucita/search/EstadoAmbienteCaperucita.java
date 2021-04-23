@@ -103,6 +103,7 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         this.setPosicionLobo(new int[]{6,4});
         this.setPosicionFlores(new int[]{7,7});
         this.setPosicionAgente(new int[]{5, 11});
+        this.setBosque(bosque);
     }
 
     private void escenario2() {
@@ -152,6 +153,7 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         bosque[8][6] = PercepcionCaperucita.PERCEPCION_FLORES;
 
         this.setPosicionAgente(new int[]{6, 3});
+        this.setBosque(bosque);
     }
 
     private void escenario3() {
@@ -208,6 +210,7 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         bosque[7][8] = PercepcionCaperucita.PERCEPCION_VACIO;
 
         this.setPosicionAgente(new int[]{4, 11});
+        this.setBosque(bosque);
     }
 
     public Object clone() {

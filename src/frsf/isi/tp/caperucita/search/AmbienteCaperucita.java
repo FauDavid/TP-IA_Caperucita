@@ -17,7 +17,9 @@ public class AmbienteCaperucita extends Environment {
 
         perception.setSensorColumna(this.getColumna(col));
         perception.setSensorFila(this.getFila(row));
-        perception.setPosicionFlores(this.getEnvironmentState().getPosicionFlores());
+        perception.setPosicionFlores(this.getPosicionFlores());
+        perception.setCantidadVidas(this.getCantidadVidas());
+        perception.setBosque(this.getBosque());
 
         return perception;
     }
@@ -39,9 +41,20 @@ public class AmbienteCaperucita extends Environment {
         return ((EstadoAmbienteCaperucita) this.environmentState).getFila(fila);
     }
 
+    public int[] getPosicionFlores() {
+        return ((EstadoAmbienteCaperucita) this.environmentState).getPosicionFlores();
+    }
+
     @Override
     public String toString() {
         return environmentState.toString();
     }
 
+    public int getCantidadVidas() {
+        return ((EstadoAmbienteCaperucita) this.environmentState).getCantidadVidasAgente();
+    }
+
+    public int[][] getBosque() {
+        return ((EstadoAmbienteCaperucita) this.environmentState).getBosque();
+    }
 }

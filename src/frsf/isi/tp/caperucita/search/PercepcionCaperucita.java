@@ -16,13 +16,13 @@ public class PercepcionCaperucita extends Perception {
     public static int PERCEPCION_FLORES = 4;        //🌺
     public static int PERCEPCION_LOBO = 5;          //🐺
 
+    private int[][] bosque;
     private int[] sensorColumna;
     private int[] sensorFila;
     private int cantidadVidas;
     private int[] posicionFlores;
 
     public PercepcionCaperucita() {
-        cantidadVidas = 3;
     }
 
     public PercepcionCaperucita(Agent agente, Environment ambiente) {
@@ -39,7 +39,9 @@ public class PercepcionCaperucita extends Perception {
         int fila = estadoAmbiente.getPosicionAgente()[0];
         int columna = estadoAmbiente.getPosicionAgente()[1];
 
-        this.setPosicionFlores(ambienteCaperucita.getEnvironmentState().getPosicionFlores());
+        this.setBosque(ambienteCaperucita.getBosque());
+        this.setCantidadVidas(ambienteCaperucita.getCantidadVidas());
+        this.setPosicionFlores(ambienteCaperucita.getPosicionFlores());
         this.setSensorColumna(ambienteCaperucita.getColumna(columna));
         this.setSensorFila(ambienteCaperucita.getFila(fila));
     }
@@ -76,7 +78,6 @@ public class PercepcionCaperucita extends Perception {
         this.posicionFlores = posicionFlores;
     }
 
-
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder(new String());
@@ -98,4 +99,11 @@ public class PercepcionCaperucita extends Perception {
         return str.toString();
     }
 
+    public void setBosque(int[][] bosque) {
+        this.bosque=bosque;
+    }
+
+    public int[][] getBosque() {
+        return this.bosque;
+    }
 }

@@ -14,7 +14,6 @@ public class EstadoCaperucita extends SearchBasedAgentState {
     private int cantidadVidas;
     private int cantidadDulces;
 
-
     public EstadoCaperucita(int[][] bosque, int fila, int columna, int cantidadVidas, int cantidadDulces, int[] posicionFlores) {
         this.bosque = bosque;
         this.posicionCaperucita = new int[]{fila, columna};
@@ -46,7 +45,11 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         nuevaPosicion[0] = posicionCaperucita[0];
         nuevaPosicion[1] = posicionCaperucita[1];
 
-        EstadoCaperucita nuevoEstado = new EstadoCaperucita(nuevoBosque, this.getPosicionFila(), this.getPosicionColumna(), this.cantidadVidas, this.cantidadDulces, this.getPosicionFlores());
+        int[] nuevaPosicionFlores = new int[2];
+        nuevaPosicionFlores[0] = posicionFlores[0];
+        nuevaPosicionFlores[1] = posicionFlores[1];
+
+        EstadoCaperucita nuevoEstado = new EstadoCaperucita(nuevoBosque, this.getPosicionFila(), this.getPosicionColumna(), this.cantidadVidas, this.cantidadDulces, nuevaPosicionFlores);
 
         return nuevoEstado;
     }
@@ -64,19 +67,16 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         for (int col = 0; col < 14; col++) {
             bosque[fila][col] = percepcionCaperucita.getSensorFila()[col];
         }
-
+        bosque = percepcionCaperucita.getBosque();
         posicionFlores = percepcionCaperucita.getPosicionFlores();
         cantidadVidas = percepcionCaperucita.getCantidadVidas();
     }
 
     @Override
     public void initState() {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 14; col++) {
-                bosque[row][col] = PercepcionCaperucita.PERCEPCION_DESCONOCIDA;
-            }
-        }
-        this.setPosicionFlores(getPosicionFlores());
+        this.setBosque(getBosque());
+        this.setPosicionFloresFila(7);
+        this.setPosicionFloresColumna(7);
         this.setPosicionFila(5);
         this.setPosicionColumna(11);
         this.setCantidadVidas(3);
@@ -138,6 +138,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
 
         int[][] bosqueObj = ((EstadoCaperucita) obj).getBosque();
         int[] posicionObj = ((EstadoCaperucita) obj).getPosicion();
+        int[] posicionFloresObj = ((EstadoCaperucita) obj).getPosicionFlores();
 
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 14; col++) {
@@ -148,6 +149,10 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         }
 
         if (posicionCaperucita[0] != posicionObj[0] || posicionCaperucita[1] != posicionObj[1]) {
+            return false;
+        }
+
+        if (posicionFlores[0] != posicionFloresObj[0] || posicionFlores[1] != posicionFloresObj[1]) {
             return false;
         }
 
@@ -260,14 +265,12 @@ public class EstadoCaperucita extends SearchBasedAgentState {
             intList_recortada = intList.subList(valor + 1, info.length);
             posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
             return posicionAMoverse;
-
         }
 
         if (orientacion.equals("ARRIBA")) {
             intList_recortada = intList.subList(0, valor);
             Collections.reverse(intList_recortada);
             posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
-
             return posicionAMoverse;
         }
 

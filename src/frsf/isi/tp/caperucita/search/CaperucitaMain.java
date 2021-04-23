@@ -10,8 +10,7 @@ public class CaperucitaMain {
 
         AmbienteCaperucita ambienteCaperucita = new AmbienteCaperucita();
 
-        SearchBasedAgentSimulator simulator =
-                new SearchBasedAgentSimulator(ambienteCaperucita, caperucita);
+        SearchBasedAgentSimulator simulator = new SearchBasedAgentSimulator(ambienteCaperucita, caperucita);
 
         simulator.start();
     }
