@@ -40,7 +40,7 @@ public class AgenteCaperucita extends SearchBasedAgent {
 
     @Override
     public Action selectAction() {
-        BreathFirstSearch strategy = new BreathFirstSearch();
+        DepthFirstSearch strategy = new DepthFirstSearch();
         Search searchSolver = new Search(strategy);
         searchSolver.setVisibleTree(Search.XML_TREE);
         this.setSolver(searchSolver);
