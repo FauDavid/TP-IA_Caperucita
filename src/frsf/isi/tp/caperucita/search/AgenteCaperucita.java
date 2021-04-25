@@ -10,6 +10,7 @@ import frsf.cidisi.faia.solver.search.DepthFirstSearch;
 import frsf.cidisi.faia.solver.search.Search;
 import frsf.isi.tp.caperucita.search.actions.*;
 
+import java.rmi.NotBoundException;
 import java.security.PublicKey;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -40,9 +41,35 @@ public class AgenteCaperucita extends SearchBasedAgent {
 
     @Override
     public Action selectAction() {
+
+        // Se crea strategia de búsqueda
         DepthFirstSearch strategy = new DepthFirstSearch();
+
+        /**
+         * Another search strategy examples:
+         *
+         * Depth First Search:
+         * DepthFirstSearch strategy = new DepthFirstSearch();
+         *
+         * Breath First Search:
+         * BreathFirstSearch strategy = new BreathFirstSearch();
+         *
+         * Uniform Cost:
+         * IStepCostFunction costFunction = new CostFunction();
+         * UniformCostSearch strategy = new UniformCostSearch(costFunction);
+         *
+         * A Star Search:
+         * IStepCostFunction cost = new CostFunction();
+         * IEstimatedCostFunction heuristic = new Heuristic();
+         * AStarSearch strategy = new AStarSearch(cost, heuristic);
+         *
+         * Greedy Search:
+         * IEstimatedCostFunction heuristic = new Heuristic();
+         * GreedySearch strategy = new GreedySearch(heuristic);
+         */
+
         Search searchSolver = new Search(strategy);
-        searchSolver.setVisibleTree(Search.XML_TREE);
+        searchSolver.setVisibleTree(Search.PDF_TREE);
         this.setSolver(searchSolver);
         Action selectedAction = null;
         try {
@@ -57,6 +84,7 @@ public class AgenteCaperucita extends SearchBasedAgent {
     public void see(Perception p) {
         this.getAgentState().updateState(p);
     }
+
 
 
 }

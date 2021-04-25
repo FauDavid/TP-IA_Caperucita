@@ -24,7 +24,11 @@ public class MoverseArriba extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoColumna = estadoCaperucita.getColumna(columna);
 
-        fila = fila - estadoCaperucita.moverse(infoColumna, fila, "ARRIBA");
+        //La funcion moverse calcula la cantidad a moverse hasta que algo obstaculice al agente
+        int cantidadAMoverse =  estadoCaperucita.moverse(infoColumna, fila, "ARRIBA");
+
+        estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+        fila = fila - cantidadAMoverse;
 
         estadoCaperucita.setPosicionFila(fila);
 
@@ -40,7 +44,10 @@ public class MoverseArriba extends SearchAction {
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoColumna = estadoCaperucita.getColumna(columna);
 
-        fila = fila - estadoCaperucita.moverse(infoColumna, fila, "ARRIBA");
+        int cantidadAMoverse =  estadoCaperucita.moverse(infoColumna, fila, "ARRIBA");
+
+        estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+        fila = fila - cantidadAMoverse;
 
         estadoCaperucita.setPosicionFila(fila);
         estadoAmbiente.setPosicionAgente(new int[]{fila, columna});

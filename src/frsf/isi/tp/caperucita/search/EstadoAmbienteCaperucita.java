@@ -3,6 +3,8 @@ package frsf.isi.tp.caperucita.search;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.state.EnvironmentState;
 
+import java.util.Random;
+
 public class EstadoAmbienteCaperucita extends EnvironmentState {
     private int[][] bosque;
     private int[] posicionAgente;
@@ -85,8 +87,8 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         bosque[5][10] = PercepcionCaperucita.PERCEPCION_VACIO;
         bosque[5][11] = PercepcionCaperucita.PERCEPCION_VACIO;
 
+//      bosque[6][4] = PercepcionCaperucita.PERCEPCION_LOBO;
         bosque[6][3] = PercepcionCaperucita.PERCEPCION_VACIO;
-        bosque[6][4] = PercepcionCaperucita.PERCEPCION_LOBO;
         bosque[6][8] = PercepcionCaperucita.PERCEPCION_VACIO;
         bosque[6][10] = PercepcionCaperucita.PERCEPCION_VACIO;
 
@@ -100,9 +102,15 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
 
         bosque[8][9] = PercepcionCaperucita.PERCEPCION_PIEDRA;
 
-        this.setPosicionLobo(new int[]{6,4});
-        this.setPosicionFlores(new int[]{7,7});
         this.setPosicionAgente(new int[]{5, 11});
+        this.setPosicionFlores(new int[]{7,7});
+
+        Random rand = new Random();
+        int fil = rand.nextInt(9);
+        int col = rand.nextInt(14);
+        bosque[fil][col] = PercepcionCaperucita.PERCEPCION_LOBO;
+        this.setPosicionLobo(new int[]{fil,col});
+
         this.setBosque(bosque);
     }
 
@@ -152,6 +160,8 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
 
         bosque[8][6] = PercepcionCaperucita.PERCEPCION_FLORES;
 
+        this.setPosicionLobo(new int[]{6,4});
+        this.setPosicionFlores(new int[]{7,6});
         this.setPosicionAgente(new int[]{6, 3});
         this.setBosque(bosque);
     }
@@ -336,6 +346,7 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
     public void setCantidadDulcesAgente(int cantidadDulcesAgente) {
         this.cantidadDulcesAgente = cantidadDulcesAgente;
     }
+
 
 
 }

@@ -6,17 +6,23 @@ import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EstadoCaperucita extends SearchBasedAgentState {
     private int[][] bosque;
     private int[] posicionCaperucita;
     private int[] posicionFlores;
+    private int[] posicionInicial;
     private int cantidadVidas;
     private int cantidadDulces;
+    private int movimientosRealizados;
 
     public EstadoCaperucita(int[][] bosque, int fila, int columna, int cantidadVidas, int cantidadDulces, int[] posicionFlores) {
         this.bosque = bosque;
         this.posicionCaperucita = new int[]{fila, columna};
+        this.posicionInicial = new int[2];
+        this.posicionInicial[0]=fila;
+        this.posicionInicial[1]=columna;
         this.posicionFlores = posicionFlores;
         this.cantidadVidas = cantidadVidas;
         this.cantidadDulces = cantidadDulces;
@@ -67,18 +73,20 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         for (int col = 0; col < 14; col++) {
             bosque[fila][col] = percepcionCaperucita.getSensorFila()[col];
         }
+
         bosque = percepcionCaperucita.getBosque();
         posicionFlores = percepcionCaperucita.getPosicionFlores();
         cantidadVidas = percepcionCaperucita.getCantidadVidas();
+        cantidadDulces = percepcionCaperucita.getCantidadDulces();
     }
 
     @Override
     public void initState() {
         this.setBosque(getBosque());
-        this.setPosicionFloresFila(7);
-        this.setPosicionFloresColumna(7);
         this.setPosicionFila(5);
         this.setPosicionColumna(11);
+        this.setPosicionFloresFila(7);
+        this.setPosicionFloresColumna(7);
         this.setCantidadVidas(3);
         this.setCantidadDulces(0);
     }
@@ -149,10 +157,6 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         }
 
         if (posicionCaperucita[0] != posicionObj[0] || posicionCaperucita[1] != posicionObj[1]) {
-            return false;
-        }
-
-        if (posicionFlores[0] != posicionFloresObj[0] || posicionFlores[1] != posicionFloresObj[1]) {
             return false;
         }
 
@@ -278,7 +282,6 @@ public class EstadoCaperucita extends SearchBasedAgentState {
             intList_recortada = intList.subList(valor + 1, info.length);
             posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
             return posicionAMoverse;
-
         }
 
         if (orientacion.equals("IZQUIERDA")) {
@@ -286,7 +289,6 @@ public class EstadoCaperucita extends SearchBasedAgentState {
             Collections.reverse(intList_recortada);
             posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
             return posicionAMoverse;
-
         }
 
         return 0;
@@ -296,29 +298,38 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         this.cantidadDulces += cost;
     }
 
-    public boolean conoceBosque() {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 14; col++) {
-                if (bosque[row][col] == PercepcionCaperucita.PERCEPCION_DESCONOCIDA) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public boolean noQuedanDulces() {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 14; col++) {
-                if (bosque[row][col] == PercepcionCaperucita.PERCEPCION_DULCE) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     public boolean estaEnFlores() {
         return posicionCaperucita[0]==posicionFlores[0] && posicionCaperucita[1]==posicionFlores[1];
     }
+
+    public int getCantidadDulcesFaltantes() {
+        int result = 0;
+        for (int row = 0; row < bosque.length; row++) {
+            for (int col = 0; col < bosque.length; col++) {
+                if (bosque[row][col] == PercepcionCaperucita.PERCEPCION_DULCE) {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    public void incrementarMovimientosRealizados(int posicionAMoverse){
+        this.movimientosRealizados += posicionAMoverse;
+    }
+
+    public int getMovimientosRealizados() {
+        return movimientosRealizados;
+    }
+
+    public void setMovimientosRealizados(int movimientosRealizados) {
+        this.movimientosRealizados = movimientosRealizados;
+    }
+
+    public void perder(){
+        setCantidadDulces(0);
+        setCantidadVidas(this.cantidadVidas-1);
+        setPosicionCaperucita(posicionInicial);
+    }
+
 }

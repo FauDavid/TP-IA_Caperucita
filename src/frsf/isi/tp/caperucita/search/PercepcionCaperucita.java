@@ -20,9 +20,11 @@ public class PercepcionCaperucita extends Perception {
     private int[] sensorColumna;
     private int[] sensorFila;
     private int cantidadVidas;
+    private int cantidadDulces;
     private int[] posicionFlores;
 
     public PercepcionCaperucita() {
+        cantidadVidas=3;
     }
 
     public PercepcionCaperucita(Agent agente, Environment ambiente) {
@@ -45,6 +47,29 @@ public class PercepcionCaperucita extends Perception {
         this.setSensorColumna(ambienteCaperucita.getColumna(columna));
         this.setSensorFila(ambienteCaperucita.getFila(fila));
     }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder(new String());
+        str.append(" \n");
+        str.append("Vidas: ").append(this.cantidadVidas);
+        str.append(" \n");
+        str.append("Columna: ");
+        for (int row = 0; row < 9; row++) {
+            str.append(" ");
+            str.append(this.sensorColumna[row]);
+        }
+        str.append(" \n");
+        str.append("Fila: ");
+        for (int col = 0; col < 14; col++) {
+            str.append(" ");
+            str.append(this.sensorFila[col]);
+        }
+        str.append(" \n");
+        return str.toString();
+    }
+
+    //Método especificos de caperucita
 
     public int[] getSensorColumna() {
         return sensorColumna;
@@ -78,27 +103,6 @@ public class PercepcionCaperucita extends Perception {
         this.posicionFlores = posicionFlores;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder(new String());
-        str.append(" \n");
-        str.append("Vidas: ").append(this.cantidadVidas);
-        str.append(" \n");
-        str.append("Columna: ");
-        for (int row = 0; row < 9; row++) {
-            str.append(" ");
-            str.append(this.sensorColumna[row]);
-        }
-        str.append(" \n");
-        str.append("Fila: ");
-        for (int col = 0; col < 14; col++) {
-            str.append(" ");
-            str.append(this.sensorFila[col]);
-        }
-        str.append(" \n");
-        return str.toString();
-    }
-
     public void setBosque(int[][] bosque) {
         this.bosque=bosque;
     }
@@ -106,4 +110,14 @@ public class PercepcionCaperucita extends Perception {
     public int[][] getBosque() {
         return this.bosque;
     }
+
+    public int getCantidadDulces() {
+        return cantidadDulces;
+    }
+
+    public void setCantidadDulces(int cantidadDulces) {
+        this.cantidadDulces = cantidadDulces;
+    }
+
+
 }

@@ -7,6 +7,14 @@ import frsf.cidisi.faia.environment.Environment;
 import java.util.Arrays;
 
 public class AmbienteCaperucita extends Environment {
+    public AmbienteCaperucita() {
+        this.environmentState = new EstadoAmbienteCaperucita();
+    }
+
+    @Override
+    public EstadoAmbienteCaperucita getEnvironmentState() {
+        return (EstadoAmbienteCaperucita) super.getEnvironmentState();
+    }
 
     @Override
     public Perception getPercept() {
@@ -24,14 +32,20 @@ public class AmbienteCaperucita extends Environment {
         return perception;
     }
 
-    public AmbienteCaperucita() {
-        this.environmentState = new EstadoAmbienteCaperucita();
+    @Override
+    public String toString() {
+        return environmentState.toString();
     }
 
     @Override
-    public EstadoAmbienteCaperucita getEnvironmentState() {
-        return (EstadoAmbienteCaperucita) super.getEnvironmentState();
+    public boolean agentFailed(Action actionReturned) {
+        EstadoAmbienteCaperucita estadoAmbienteCaperucita = this.getEnvironmentState();
+        int vidasAgente = estadoAmbienteCaperucita.getCantidadVidasAgente();
+        if (vidasAgente == 0) return true;
+        return false;
     }
+
+    //Métodos especificos de caperucita
 
     public int[] getColumna(int columna) {
         return ((EstadoAmbienteCaperucita) this.environmentState).getColumna(columna);
@@ -43,11 +57,6 @@ public class AmbienteCaperucita extends Environment {
 
     public int[] getPosicionFlores() {
         return ((EstadoAmbienteCaperucita) this.environmentState).getPosicionFlores();
-    }
-
-    @Override
-    public String toString() {
-        return environmentState.toString();
     }
 
     public int getCantidadVidas() {
