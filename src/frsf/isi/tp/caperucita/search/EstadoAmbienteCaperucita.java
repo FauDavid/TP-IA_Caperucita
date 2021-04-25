@@ -103,7 +103,7 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         bosque[8][9] = PercepcionCaperucita.PERCEPCION_PIEDRA;
 
         this.setPosicionAgente(new int[]{5, 11});
-        this.setPosicionFlores(new int[]{7,7});
+        this.setPosicionFlores(new int[]{7, 7});
 
         Random rand = new Random();
         int fil = rand.nextInt(9);
@@ -263,29 +263,26 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
             for (int col = 0; col < 14; col++) {
                 if (bosque[row][col] == 0) {
                     if(getPosicionAgente()[0]==row && getPosicionAgente()[1]==col){
-                        str.append("\uD83D\uDC67 ");
+                        str.append("C   ");
                     }
                     else{
-                        str.append("\uD83D\uDD73 ");
+                        str.append("_   ");
                     }
                 }
                 if (bosque[row][col] == 1) {
-                    str.append("\uD83C\uDF32 ");
+                    str.append("A   ");
                 }
                 if (bosque[row][col] == 2) {
-                    str.append("\uD83C\uDF69 ");
+                    str.append("D   ");
                 }
                 if (bosque[row][col] == 3) {
-                    str.append("\uD83D\uDDFF ");
+                    str.append("P   ");
                 }
                 if (bosque[row][col] == 4) {
-                    str.append("\uD83C\uDF3A ");
+                    str.append("F   ");
                 }
                 if (bosque[row][col] == 5) {
-                    str.append("\uD83D\uDC3A ");
-                }
-                if (bosque[row][col] == -1) {
-                    str.append("❔ ");
+                    str.append("L   ");
                 }
             }
             str.append(" \n");

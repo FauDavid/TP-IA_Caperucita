@@ -28,6 +28,7 @@ public class AmbienteCaperucita extends Environment {
         perception.setPosicionFlores(this.getPosicionFlores());
         perception.setCantidadVidas(this.getCantidadVidas());
         perception.setBosque(this.getBosque());
+        perception.setCantidadDulces(this.getCantidadDulces());
 
         return perception;
     }
@@ -66,4 +67,9 @@ public class AmbienteCaperucita extends Environment {
     public int[][] getBosque() {
         return ((EstadoAmbienteCaperucita) this.environmentState).getBosque();
     }
+
+    public int getCantidadDulces() {
+        return ((EstadoAmbienteCaperucita) this.environmentState).getCantidadDulcesAgente();
+    }
+
 }

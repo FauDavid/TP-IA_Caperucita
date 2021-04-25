@@ -76,8 +76,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
 
         bosque = percepcionCaperucita.getBosque();
         posicionFlores = percepcionCaperucita.getPosicionFlores();
-        cantidadVidas = percepcionCaperucita.getCantidadVidas();
-        cantidadDulces = percepcionCaperucita.getCantidadDulces();
+
     }
 
     @Override
@@ -108,28 +107,25 @@ public class EstadoCaperucita extends SearchBasedAgentState {
             for (int col = 0; col < 14; col++) {
                 if (bosque[row][col] == 0) {
                     if (getPosicion()[0] == row && getPosicion()[1] == col) {
-                        str.append("\uD83D\uDC67 ");
+                        str.append("C   ");
                     } else {
-                        str.append("\uD83D\uDD73 ");
+                        str.append("_   ");
                     }
                 }
                 if (bosque[row][col] == 1) {
-                    str.append("\uD83C\uDF32 ");
+                    str.append("A   ");
                 }
                 if (bosque[row][col] == 2) {
-                    str.append("\uD83C\uDF69 ");
+                    str.append("D   ");
                 }
                 if (bosque[row][col] == 3) {
-                    str.append("\uD83D\uDDFF ");
+                    str.append("P   ");
                 }
                 if (bosque[row][col] == 4) {
-                    str.append("\uD83C\uDF3A ");
+                    str.append("F   ");
                 }
                 if (bosque[row][col] == 5) {
-                    str.append("\uD83D\uDC3A ");
-                }
-                if (bosque[row][col] == -1) {
-                    str.append("❔ ");
+                    str.append("L   ");
                 }
             }
             str.append(" \n");
@@ -294,24 +290,12 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         return 0;
     }
 
-    public void incrementarDulces(Double cost) {
-        this.cantidadDulces += cost;
+    public void incrementarDulces(double dulces) {
+        this.cantidadDulces += dulces;
     }
 
     public boolean estaEnFlores() {
         return posicionCaperucita[0]==posicionFlores[0] && posicionCaperucita[1]==posicionFlores[1];
-    }
-
-    public int getCantidadDulcesFaltantes() {
-        int result = 0;
-        for (int row = 0; row < bosque.length; row++) {
-            for (int col = 0; col < bosque.length; col++) {
-                if (bosque[row][col] == PercepcionCaperucita.PERCEPCION_DULCE) {
-                    result++;
-                }
-            }
-        }
-        return result;
     }
 
     public void incrementarMovimientosRealizados(int posicionAMoverse){
@@ -332,4 +316,9 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         setPosicionCaperucita(posicionInicial);
     }
 
+    public double getDistanciaAFlores() {
+        int distanciaX = posicionFlores[0]-posicionCaperucita[0];
+        int distanciaY = posicionFlores[1]-posicionCaperucita[1];
+        return Math.sqrt((distanciaX)*(distanciaX) + (distanciaY)*(distanciaY));
+    }
 }

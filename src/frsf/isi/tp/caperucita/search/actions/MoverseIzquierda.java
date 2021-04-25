@@ -22,17 +22,16 @@ public class MoverseIzquierda extends SearchAction {
         int fila = estadoCaperucita.getPosicionFila();
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
+        int cantidadAMoverse = estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
 
-        //La funcion moverse calcula la cantidad a moverse hasta que algo obstaculice al agente
-        int cantidadAMoverse =  estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
-
-        estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
-        columna = columna - cantidadAMoverse;
-
-        estadoCaperucita.setPosicionColumna(columna);
-
-        return estadoCaperucita;
-}
+        if (cantidadAMoverse > 0) {
+            estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+            columna = columna - cantidadAMoverse;
+            estadoCaperucita.setPosicionColumna(columna);
+            return estadoCaperucita;
+        }
+        return null;
+    }
 
     @Override
     public EnvironmentState execute(AgentState ast, EnvironmentState est) {
@@ -42,16 +41,17 @@ public class MoverseIzquierda extends SearchAction {
         int fila = estadoCaperucita.getPosicionFila();
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
+        int cantidadAMoverse = estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
 
-        int cantidadAMoverse =  estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
+        if(cantidadAMoverse>0) {
+            estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+            columna = columna - cantidadAMoverse;
+            estadoCaperucita.setPosicionColumna(columna);
+            estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
+            return estadoAmbiente;
+        }
 
-        estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
-        columna = columna - cantidadAMoverse;
-
-        estadoCaperucita.setPosicionColumna(columna);
-        estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
-
-        return estadoAmbiente;
+        return null;
     }
 
     @Override

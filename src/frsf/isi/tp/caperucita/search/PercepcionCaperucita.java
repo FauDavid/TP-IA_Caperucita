@@ -43,6 +43,7 @@ public class PercepcionCaperucita extends Perception {
 
         this.setBosque(ambienteCaperucita.getBosque());
         this.setCantidadVidas(ambienteCaperucita.getCantidadVidas());
+        this.setCantidadDulces(ambienteCaperucita.getCantidadDulces());
         this.setPosicionFlores(ambienteCaperucita.getPosicionFlores());
         this.setSensorColumna(ambienteCaperucita.getColumna(columna));
         this.setSensorFila(ambienteCaperucita.getFila(fila));

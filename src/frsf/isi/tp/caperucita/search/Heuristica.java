@@ -18,6 +18,6 @@ public class Heuristica implements IEstimatedCostFunction {
     @Override
     public double getEstimatedCost(NTree node) {
         EstadoCaperucita estadoCaperucita = (EstadoCaperucita) node.getAgentState();
-        return (estadoCaperucita.getCantidadDulcesFaltantes());
+        return (estadoCaperucita.getDistanciaAFlores());
     }
 }
