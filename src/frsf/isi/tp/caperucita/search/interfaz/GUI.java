@@ -11,8 +11,18 @@ import java.awt.*;
 
 public class GUI extends JFrame {
     int espaciado = 3;
-    Mapa mapa = new Mapa();
+    public Mapa mapa = new Mapa();
 
+    public GUI(){
+        this.setTitle("Agente Caperucita ");
+        this.setSize(855, 580);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+        this.setResizable(false);
+        this.setContentPane(mapa);
+    }
+
+    /*
     public GUI(int[][] bosque, int[] posicion) {
         this.setTitle("Agente Caperucita ");
         this.setSize(855, 580);
@@ -22,12 +32,8 @@ public class GUI extends JFrame {
         mapa.bosque=bosque;
         mapa.posicionCaperucita=posicion;
         this.setContentPane(mapa);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
+     */
 
     public class Mapa extends JPanel {
         int[][] bosque;

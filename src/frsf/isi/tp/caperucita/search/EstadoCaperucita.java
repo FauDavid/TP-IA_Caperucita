@@ -17,6 +17,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
     private int cantidadVidas;
     private int cantidadDulces;
     private int movimientosRealizados;
+    private GUI gui;
 
     public EstadoCaperucita(int[][] bosque, int fila, int columna, int cantidadVidas, int cantidadDulces, int[] posicionFlores) {
         this.bosque = bosque;
@@ -33,6 +34,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         bosque = new int[9][14];
         posicionCaperucita = new int[2];
         posicionFlores = new int[2];
+        gui = new GUI();
         cantidadVidas = 3;
         cantidadDulces = 0;
         this.initState();
@@ -137,7 +139,16 @@ public class EstadoCaperucita extends SearchBasedAgentState {
     }
 
     public void dibujar() {
-        GUI gui = new GUI(bosque,getPosicion());
+        gui.mapa.setBosque(bosque);
+        gui.mapa.setPosicion(posicionCaperucita);
+        gui.repaint();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
