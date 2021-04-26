@@ -32,6 +32,7 @@ public class MoverseArriba extends SearchAction {
             estadoCaperucita.setPosicionFila(fila);
             return estadoCaperucita;
         }
+
         return null;
     }
 

@@ -30,6 +30,7 @@ public class MoverseIzquierda extends SearchAction {
             estadoCaperucita.setPosicionColumna(columna);
             return estadoCaperucita;
         }
+
         return null;
     }
 
@@ -43,7 +44,7 @@ public class MoverseIzquierda extends SearchAction {
         int[] infoFila = estadoCaperucita.getFila(fila);
         int cantidadAMoverse = estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
 
-        if(cantidadAMoverse>0) {
+        if (cantidadAMoverse > 0) {
             estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
             columna = columna - cantidadAMoverse;
             estadoCaperucita.setPosicionColumna(columna);

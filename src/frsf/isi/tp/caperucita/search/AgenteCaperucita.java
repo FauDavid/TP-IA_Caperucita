@@ -41,40 +41,31 @@ public class AgenteCaperucita extends SearchBasedAgent {
     public Action selectAction() {
 
         /*Método de Búsqueda en Profundidad
-
         DepthFirstSearch strategy = new DepthFirstSearch();
-
         */
 
         /*Método de Búsqueda en Anchura
-
         BreathFirstSearch strategy = new BreathFirstSearch();
-
         */
 
         /*Método de Búsqueda Avara
-
         IEstimatedCostFunction heuristic = new Heuristica();
         GreedySearch strategy = new GreedySearch(heuristic);
-
         */
 
         /*Método de Búsqueda A*
-
         IStepCostFunction cost = new FuncionCosto();
         IEstimatedCostFunction heuristic = new Heuristica();
         AStarSearch strategy = new AStarSearch(cost, heuristic);
-
         */
 
         /*Método de Costo Uniforme
-
-         IStepCostFunction costFunction = new CostFunction();
+         IStepCostFunction costFunction = new FuncionCosto();
          UniformCostSearch strategy = new UniformCostSearch(costFunction);
-
-         */
+          */
 
         DepthFirstSearch strategy = new DepthFirstSearch();
+
         Search searchSolver = new Search(strategy);
 
         searchSolver.setVisibleTree(Search.EFAIA_TREE);
