@@ -2,6 +2,7 @@ package frsf.isi.tp.caperucita.search;
 
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
+import frsf.isi.tp.caperucita.search.interfaz.GUI;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,8 +22,8 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         this.bosque = bosque;
         this.posicionCaperucita = new int[]{fila, columna};
         this.posicionInicial = new int[2];
-        this.posicionInicial[0]=fila;
-        this.posicionInicial[1]=columna;
+        this.posicionInicial[0] = fila;
+        this.posicionInicial[1] = columna;
         this.posicionFlores = posicionFlores;
         this.cantidadVidas = cantidadVidas;
         this.cantidadDulces = cantidadDulces;
@@ -76,7 +77,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
 
         bosque = percepcionCaperucita.getBosque();
         posicionFlores = percepcionCaperucita.getPosicionFlores();
-
+        dibujar();
     }
 
     @Override
@@ -133,6 +134,10 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         str.append(" ");
 
         return str.toString();
+    }
+
+    public void dibujar() {
+        GUI gui = new GUI(bosque,getPosicion());
     }
 
     @Override
@@ -261,7 +266,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         }
         List<Integer> intList_recortada = new ArrayList<Integer>();
 
-        if(!intList.contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
+        if (!intList.contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
             if (orientacion.equals("ABAJO")) {
                 intList_recortada = intList.subList(valor + 1, info.length);
                 posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
@@ -297,10 +302,10 @@ public class EstadoCaperucita extends SearchBasedAgentState {
     }
 
     public boolean estaEnFlores() {
-        return posicionCaperucita[0]==posicionFlores[0] && posicionCaperucita[1]==posicionFlores[1];
+        return posicionCaperucita[0] == posicionFlores[0] && posicionCaperucita[1] == posicionFlores[1];
     }
 
-    public void incrementarMovimientosRealizados(int posicionAMoverse){
+    public void incrementarMovimientosRealizados(int posicionAMoverse) {
         this.movimientosRealizados += posicionAMoverse;
     }
 
@@ -312,15 +317,15 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         this.movimientosRealizados = movimientosRealizados;
     }
 
-    public void perder(){
+    public void perder() {
         setCantidadDulces(0);
-        setCantidadVidas(this.cantidadVidas-1);
+        setCantidadVidas(this.cantidadVidas - 1);
         setPosicionCaperucita(posicionInicial);
     }
 
     public double getDistanciaAFlores() {
-        int distanciaX = posicionFlores[0]-posicionCaperucita[0];
-        int distanciaY = posicionFlores[1]-posicionCaperucita[1];
-        return Math.sqrt((distanciaX)*(distanciaX) + (distanciaY)*(distanciaY));
+        int distanciaX = posicionFlores[0] - posicionCaperucita[0];
+        int distanciaY = posicionFlores[1] - posicionCaperucita[1];
+        return Math.sqrt((distanciaX) * (distanciaX) + (distanciaY) * (distanciaY));
     }
 }

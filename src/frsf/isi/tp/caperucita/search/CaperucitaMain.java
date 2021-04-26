@@ -2,6 +2,7 @@ package frsf.isi.tp.caperucita.search;
 
 import frsf.cidisi.faia.exceptions.PrologConnectorException;
 import frsf.cidisi.faia.simulator.SearchBasedAgentSimulator;
+import frsf.isi.tp.caperucita.search.interfaz.GUI;
 
 public class CaperucitaMain {
 

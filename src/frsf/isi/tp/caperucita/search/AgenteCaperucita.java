@@ -7,6 +7,7 @@ import frsf.cidisi.faia.agent.search.SearchAction;
 import frsf.cidisi.faia.agent.search.SearchBasedAgent;
 import frsf.cidisi.faia.solver.search.*;
 import frsf.isi.tp.caperucita.search.actions.*;
+import frsf.isi.tp.caperucita.search.interfaz.GUI;
 
 import java.rmi.NotBoundException;
 import java.security.PublicKey;
@@ -78,6 +79,7 @@ public class AgenteCaperucita extends SearchBasedAgent {
         } catch (Exception ex) {
             Logger.getLogger(AgenteCaperucita.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         return selectedAction;
     }
 

@@ -3,6 +3,7 @@ package frsf.isi.tp.caperucita.search;
 import frsf.cidisi.faia.agent.Action;
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.environment.Environment;
+import frsf.isi.tp.caperucita.search.interfaz.GUI;
 
 import java.util.Arrays;
 
@@ -18,6 +19,7 @@ public class AmbienteCaperucita extends Environment {
 
     @Override
     public Perception getPercept() {
+
         PercepcionCaperucita perception = new PercepcionCaperucita();
 
         int row = this.getEnvironmentState().getPosicionAgente()[0];

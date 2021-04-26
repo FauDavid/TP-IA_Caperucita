@@ -35,8 +35,7 @@ public class PercepcionCaperucita extends Perception {
     public void initPerception(Agent agente, Environment ambiente) {
         AgenteCaperucita agenteCaperucita = (AgenteCaperucita) agente;
         AmbienteCaperucita ambienteCaperucita = (AmbienteCaperucita) ambiente;
-        EstadoAmbienteCaperucita estadoAmbiente =
-                ambienteCaperucita.getEnvironmentState();
+        EstadoAmbienteCaperucita estadoAmbiente = ambienteCaperucita.getEnvironmentState();
 
         int fila = estadoAmbiente.getPosicionAgente()[0];
         int columna = estadoAmbiente.getPosicionAgente()[1];
