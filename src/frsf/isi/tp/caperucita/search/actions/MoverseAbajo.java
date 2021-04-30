@@ -27,41 +27,62 @@ public class MoverseAbajo extends SearchAction {
             estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
             fila = fila + cantidadAMoverse;
             estadoCaperucita.setPosicionFila(fila);
+
+            //Si se encuentra con el lobo --> No ocurre ya que dentro de moverse está contemplado el hecho de "esquivar" la fila o columna que lo contiene
+            if (estadoCaperucita.getBosque()[fila][columna] == PercepcionCaperucita.PERCEPCION_LOBO) {
+                estadoCaperucita.setCantidadDulces(0);
+                estadoCaperucita.setPosicionCaperucita(estadoCaperucita.getPosicionInicial());
+                estadoCaperucita.setCantidadVidas(estadoCaperucita.getCantidadVidas() - 1);
+                return estadoCaperucita;
+            }
             return estadoCaperucita;
         }
 
-        return null;
-    }
-
-    @Override
-    public EnvironmentState execute(AgentState ast, EnvironmentState est) {
-        EstadoAmbienteCaperucita estadoAmbiente = (EstadoAmbienteCaperucita) est;
-        EstadoCaperucita estadoCaperucita = (EstadoCaperucita) ast;
-
-        int fila = estadoCaperucita.getPosicionFila();
-        int columna = estadoCaperucita.getPosicionColumna();
-        int[] infoColumna = estadoCaperucita.getColumna(columna);
-        int cantidadAMoverse = estadoCaperucita.moverse(infoColumna, fila, "ABAJO");
-
-        if (cantidadAMoverse > 0) {
-            estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
-            fila = fila + cantidadAMoverse;
-            estadoCaperucita.setPosicionFila(fila);
-            estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
-            return estadoAmbiente;
+            return null;
         }
 
-        return null;
+        @Override
+        public EnvironmentState execute (AgentState ast, EnvironmentState est){
+            EstadoAmbienteCaperucita estadoAmbiente = (EstadoAmbienteCaperucita) est;
+            EstadoCaperucita estadoCaperucita = (EstadoCaperucita) ast;
 
-    }
+            int fila = estadoCaperucita.getPosicionFila();
+            int columna = estadoCaperucita.getPosicionColumna();
+            int[] infoColumna = estadoCaperucita.getColumna(columna);
+            int cantidadAMoverse = estadoCaperucita.moverse(infoColumna, fila, "ABAJO");
 
-    @Override
-    public String toString() {
-        return "MoverseAbajo";
-    }
+            if (cantidadAMoverse > 0) {
+                estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+                fila = fila + cantidadAMoverse;
+                estadoCaperucita.setPosicionFila(fila);
+                estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
 
-    @Override
-    public Double getCost() {
-        return new Double(0);
+                //Si se encuentra con el lobo --> No ocurre ya que dentro de moverse está contemplado el hecho de "esquivar" la fila o columna que lo contiene
+                if (estadoCaperucita.getBosque()[fila][columna] == PercepcionCaperucita.PERCEPCION_LOBO) {
+                    estadoCaperucita.setCantidadDulces(0);
+                    estadoCaperucita.setPosicionCaperucita(estadoCaperucita.getPosicionInicial());
+                    estadoCaperucita.setCantidadVidas(estadoCaperucita.getCantidadVidas() - 1);
+                    estadoAmbiente.setCantidadDulcesAgente(0);
+                    estadoAmbiente.setCantidadVidasAgente(estadoAmbiente.getCantidadVidasAgente() - 1);
+                    estadoAmbiente.setPosicionAgente(estadoCaperucita.getPosicionInicial());
+                    return estadoAmbiente;
+                }
+                return estadoAmbiente;
+            }
+
+
+
+            return null;
+
+        }
+
+        @Override
+        public String toString () {
+            return "MoverseAbajo";
+        }
+
+        @Override
+        public Double getCost () {
+            return new Double(0);
+        }
     }
-}
