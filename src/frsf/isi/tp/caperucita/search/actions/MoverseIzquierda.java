@@ -22,13 +22,17 @@ public class MoverseIzquierda extends SearchAction {
         int fila = estadoCaperucita.getPosicionFila();
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
+        int cantidadAMoverse = estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
 
-        int proxColumna = columna - estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
+        if (cantidadAMoverse > 0) {
+            estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+            columna = columna - cantidadAMoverse;
+            estadoCaperucita.setPosicionColumna(columna);
+            return estadoCaperucita;
+        }
 
-        estadoCaperucita.setPosicionColumna(proxColumna);
-
-        return estadoCaperucita;
-}
+        return null;
+    }
 
     @Override
     public EnvironmentState execute(AgentState ast, EnvironmentState est) {
@@ -38,13 +42,17 @@ public class MoverseIzquierda extends SearchAction {
         int fila = estadoCaperucita.getPosicionFila();
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoFila = estadoCaperucita.getFila(fila);
+        int cantidadAMoverse = estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
 
-        int proxColumna = columna - estadoCaperucita.moverse(infoFila, columna, "IZQUIERDA");
+        if (cantidadAMoverse > 0) {
+            estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+            columna = columna - cantidadAMoverse;
+            estadoCaperucita.setPosicionColumna(columna);
+            estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
+            return estadoAmbiente;
+        }
 
-        estadoCaperucita.setPosicionColumna(proxColumna);
-        estadoAmbiente.setPosicionAgente(new int[]{fila, proxColumna});
-
-        return estadoAmbiente;
+        return null;
     }
 
     @Override

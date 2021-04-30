@@ -20,15 +20,20 @@ public class MoverseArriba extends SearchAction {
     @Override
     public SearchBasedAgentState execute(SearchBasedAgentState s) {
         EstadoCaperucita estadoCaperucita = (EstadoCaperucita) s;
+
         int fila = estadoCaperucita.getPosicionFila();
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoColumna = estadoCaperucita.getColumna(columna);
+        int cantidadAMoverse = estadoCaperucita.moverse(infoColumna, fila, "ARRIBA");
 
-        fila = fila - estadoCaperucita.moverse(infoColumna, fila, "ARRIBA");
+        if (cantidadAMoverse > 0) {
+            estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+            fila = fila - cantidadAMoverse;
+            estadoCaperucita.setPosicionFila(fila);
+            return estadoCaperucita;
+        }
 
-        estadoCaperucita.setPosicionFila(fila);
-
-        return estadoCaperucita;
+        return null;
     }
 
     @Override
@@ -39,13 +44,17 @@ public class MoverseArriba extends SearchAction {
         int fila = estadoCaperucita.getPosicionFila();
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoColumna = estadoCaperucita.getColumna(columna);
+        int cantidadAMoverse = estadoCaperucita.moverse(infoColumna, fila, "ARRIBA");
 
-        fila = fila - estadoCaperucita.moverse(infoColumna, fila, "ARRIBA");
+        if (cantidadAMoverse > 0) {
+            estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+            fila = fila - cantidadAMoverse;
+            estadoCaperucita.setPosicionFila(fila);
+            estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
+            return estadoAmbiente;
+        }
 
-        estadoCaperucita.setPosicionFila(fila);
-        estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
-
-        return estadoAmbiente;
+        return null;
     }
 
     @Override

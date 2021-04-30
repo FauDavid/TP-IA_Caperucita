@@ -21,12 +21,16 @@ public class MoverseAbajo extends SearchAction {
         int fila = estadoCaperucita.getPosicionFila();
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoColumna = estadoCaperucita.getColumna(columna);
+        int cantidadAMoverse = estadoCaperucita.moverse(infoColumna, fila, "ABAJO");
 
-        fila = fila + estadoCaperucita.moverse(infoColumna, fila, "ABAJO");
+        if (cantidadAMoverse > 0) {
+            estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+            fila = fila + cantidadAMoverse;
+            estadoCaperucita.setPosicionFila(fila);
+            return estadoCaperucita;
+        }
 
-        estadoCaperucita.setPosicionFila(fila);
-
-        return estadoCaperucita;
+        return null;
     }
 
     @Override
@@ -37,13 +41,17 @@ public class MoverseAbajo extends SearchAction {
         int fila = estadoCaperucita.getPosicionFila();
         int columna = estadoCaperucita.getPosicionColumna();
         int[] infoColumna = estadoCaperucita.getColumna(columna);
+        int cantidadAMoverse = estadoCaperucita.moverse(infoColumna, fila, "ABAJO");
 
-        fila = fila + estadoCaperucita.moverse(infoColumna, fila, "ABAJO");
+        if (cantidadAMoverse > 0) {
+            estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+            fila = fila + cantidadAMoverse;
+            estadoCaperucita.setPosicionFila(fila);
+            estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
+            return estadoAmbiente;
+        }
 
-        estadoCaperucita.setPosicionFila(fila);
-        estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
-
-        return estadoAmbiente;
+        return null;
 
     }
 

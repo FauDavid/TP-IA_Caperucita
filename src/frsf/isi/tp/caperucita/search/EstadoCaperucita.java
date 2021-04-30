@@ -2,21 +2,29 @@ package frsf.isi.tp.caperucita.search;
 
 import frsf.cidisi.faia.agent.Perception;
 import frsf.cidisi.faia.agent.search.SearchBasedAgentState;
+import frsf.isi.tp.caperucita.search.interfaz.GUI;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EstadoCaperucita extends SearchBasedAgentState {
     private int[][] bosque;
     private int[] posicionCaperucita;
     private int[] posicionFlores;
+    private int[] posicionInicial;
     private int cantidadVidas;
     private int cantidadDulces;
+    private int movimientosRealizados;
+    private GUI gui;
 
     public EstadoCaperucita(int[][] bosque, int fila, int columna, int cantidadVidas, int cantidadDulces, int[] posicionFlores) {
         this.bosque = bosque;
         this.posicionCaperucita = new int[]{fila, columna};
+        this.posicionInicial = new int[2];
+        this.posicionInicial[0] = fila;
+        this.posicionInicial[1] = columna;
         this.posicionFlores = posicionFlores;
         this.cantidadVidas = cantidadVidas;
         this.cantidadDulces = cantidadDulces;
@@ -25,6 +33,7 @@ public class EstadoCaperucita extends SearchBasedAgentState {
     public EstadoCaperucita() {
         bosque = new int[9][14];
         posicionCaperucita = new int[2];
+        gui = new GUI();
         posicionFlores = new int[2];
         cantidadVidas = 3;
         cantidadDulces = 0;
@@ -67,20 +76,20 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         for (int col = 0; col < 14; col++) {
             bosque[fila][col] = percepcionCaperucita.getSensorFila()[col];
         }
+
         bosque = percepcionCaperucita.getBosque();
         posicionFlores = percepcionCaperucita.getPosicionFlores();
-        cantidadVidas = percepcionCaperucita.getCantidadVidas();
+        dibujar();
     }
 
     @Override
     public void initState() {
         this.setBosque(getBosque());
-        this.setPosicionFloresFila(7);
-        this.setPosicionFloresColumna(7);
         this.setPosicionFila(5);
         this.setPosicionColumna(11);
         this.setCantidadVidas(3);
         this.setCantidadDulces(0);
+
     }
 
     @Override
@@ -100,28 +109,25 @@ public class EstadoCaperucita extends SearchBasedAgentState {
             for (int col = 0; col < 14; col++) {
                 if (bosque[row][col] == 0) {
                     if (getPosicion()[0] == row && getPosicion()[1] == col) {
-                        str.append("\uD83D\uDC67 ");
+                        str.append("C   ");
                     } else {
-                        str.append("\uD83D\uDD73 ");
+                        str.append("_   ");
                     }
                 }
                 if (bosque[row][col] == 1) {
-                    str.append("\uD83C\uDF32 ");
+                    str.append("A   ");
                 }
                 if (bosque[row][col] == 2) {
-                    str.append("\uD83C\uDF69 ");
+                    str.append("D   ");
                 }
                 if (bosque[row][col] == 3) {
-                    str.append("\uD83D\uDDFF ");
+                    str.append("P   ");
                 }
                 if (bosque[row][col] == 4) {
-                    str.append("\uD83C\uDF3A ");
+                    str.append("F   ");
                 }
                 if (bosque[row][col] == 5) {
-                    str.append("\uD83D\uDC3A ");
-                }
-                if (bosque[row][col] == -1) {
-                    str.append("❔ ");
+                    str.append("L   ");
                 }
             }
             str.append(" \n");
@@ -129,6 +135,19 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         str.append(" ");
 
         return str.toString();
+    }
+
+    public void dibujar() {
+        gui.mapa.setBosque(bosque);
+        gui.mapa.setPosicion(posicionCaperucita);
+        gui.repaint();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -149,10 +168,6 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         }
 
         if (posicionCaperucita[0] != posicionObj[0] || posicionCaperucita[1] != posicionObj[1]) {
-            return false;
-        }
-
-        if (posicionFlores[0] != posicionFloresObj[0] || posicionFlores[1] != posicionFloresObj[1]) {
             return false;
         }
 
@@ -261,64 +276,73 @@ public class EstadoCaperucita extends SearchBasedAgentState {
         }
         List<Integer> intList_recortada = new ArrayList<Integer>();
 
-        if (orientacion.equals("ABAJO")) {
-            intList_recortada = intList.subList(valor + 1, info.length);
-            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
-            return posicionAMoverse;
-        }
+            if (orientacion.equals("ABAJO")) {
+                intList_recortada = intList.subList(valor + 1, info.length);
+                if(!intList_recortada.contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
+                    posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
+                    return posicionAMoverse;
+                }
+            }
 
-        if (orientacion.equals("ARRIBA")) {
-            intList_recortada = intList.subList(0, valor);
-            Collections.reverse(intList_recortada);
-            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
-            return posicionAMoverse;
-        }
+            if (orientacion.equals("ARRIBA")) {
+                intList_recortada = intList.subList(0, valor);
+                Collections.reverse(intList_recortada);
+                if(!intList_recortada.contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
+                    posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
+                    return posicionAMoverse;
+                }
+            }
 
-        if (orientacion.equals("DERECHA")) {
-            intList_recortada = intList.subList(valor + 1, info.length);
-            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
-            return posicionAMoverse;
+            if (orientacion.equals("DERECHA")) {
+                intList_recortada = intList.subList(valor + 1, info.length);
+                if(!intList_recortada.contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
+                    posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
+                    return posicionAMoverse;
+                }
+            }
 
-        }
-
-        if (orientacion.equals("IZQUIERDA")) {
-            intList_recortada = intList.subList(0, valor);
-            Collections.reverse(intList_recortada);
-            posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
-            return posicionAMoverse;
-
-        }
+            if (orientacion.equals("IZQUIERDA")) {
+                intList_recortada = intList.subList(0, valor);
+                Collections.reverse(intList_recortada);
+                if(!intList_recortada.contains(PercepcionCaperucita.PERCEPCION_LOBO)) {
+                    posicionAMoverse = (int) intList_recortada.stream().takeWhile(i -> (i.equals(PercepcionCaperucita.PERCEPCION_VACIO) || i.equals(PercepcionCaperucita.PERCEPCION_FLORES) || i.equals(PercepcionCaperucita.PERCEPCION_DULCE))).count();
+                    return posicionAMoverse;
+                }
+            }
 
         return 0;
     }
 
-    public void incrementarDulces(Double cost) {
-        this.cantidadDulces += cost;
-    }
-
-    public boolean conoceBosque() {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 14; col++) {
-                if (bosque[row][col] == PercepcionCaperucita.PERCEPCION_DESCONOCIDA) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public boolean noQuedanDulces() {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 14; col++) {
-                if (bosque[row][col] == PercepcionCaperucita.PERCEPCION_DULCE) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    public void incrementarDulces(double dulces) {
+        this.cantidadDulces += dulces;
     }
 
     public boolean estaEnFlores() {
-        return posicionCaperucita[0]==posicionFlores[0] && posicionCaperucita[1]==posicionFlores[1];
+        return posicionCaperucita[0] == posicionFlores[0] && posicionCaperucita[1] == posicionFlores[1];
     }
+
+    public void incrementarMovimientosRealizados(int posicionAMoverse) {
+        this.movimientosRealizados += posicionAMoverse;
+    }
+
+    public int getMovimientosRealizados() {
+        return movimientosRealizados;
+    }
+
+    public void setMovimientosRealizados(int movimientosRealizados) {
+        this.movimientosRealizados = movimientosRealizados;
+    }
+
+    public void perder() {
+        setCantidadDulces(0);
+        setCantidadVidas(this.cantidadVidas - 1);
+        setPosicionCaperucita(posicionInicial);
+    }
+
+    public double getDistanciaAFlores() {
+        int distanciaX = posicionFlores[0] - posicionCaperucita[0];
+        int distanciaY = posicionFlores[1] - posicionCaperucita[1];
+        return Math.sqrt(((distanciaX) * (distanciaX)) + ((distanciaY) * (distanciaY)));
+    }
+
 }
