@@ -30,6 +30,14 @@ public class MoverseArriba extends SearchAction {
             estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
             fila = fila - cantidadAMoverse;
             estadoCaperucita.setPosicionFila(fila);
+
+            //Si se encuentra con el lobo --> No ocurre ya que dentro de moverse está contemplado el hecho de "esquivar" la fila o columna que lo contiene
+            if (estadoCaperucita.getBosque()[fila][columna] == PercepcionCaperucita.PERCEPCION_LOBO) {
+                estadoCaperucita.setCantidadDulces(0);
+                estadoCaperucita.setPosicionCaperucita(estadoCaperucita.getPosicionInicial());
+                estadoCaperucita.setCantidadVidas(estadoCaperucita.getCantidadVidas() - 1);
+                return estadoCaperucita;
+            }
             return estadoCaperucita;
         }
 
@@ -51,6 +59,17 @@ public class MoverseArriba extends SearchAction {
             fila = fila - cantidadAMoverse;
             estadoCaperucita.setPosicionFila(fila);
             estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
+
+            //Si se encuentra con el lobo --> No ocurre ya que dentro de moverse está contemplado el hecho de "esquivar" la fila o columna que lo contiene
+            if (estadoCaperucita.getBosque()[fila][columna] == PercepcionCaperucita.PERCEPCION_LOBO) {
+                estadoCaperucita.setCantidadDulces(0);
+                estadoCaperucita.setPosicionCaperucita(estadoCaperucita.getPosicionInicial());
+                estadoCaperucita.setCantidadVidas(estadoCaperucita.getCantidadVidas() - 1);
+                estadoAmbiente.setCantidadDulcesAgente(0);
+                estadoAmbiente.setCantidadVidasAgente(estadoAmbiente.getCantidadVidasAgente() - 1);
+                estadoAmbiente.setPosicionAgente(estadoCaperucita.getPosicionInicial());
+                return estadoAmbiente;
+            }
             return estadoAmbiente;
         }
 

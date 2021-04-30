@@ -22,6 +22,7 @@ public class PercepcionCaperucita extends Perception {
     private int cantidadVidas;
     private int cantidadDulces;
     private int[] posicionFlores;
+    private int[] posicionCaperucita;
 
     public PercepcionCaperucita() {
         cantidadVidas=3;
@@ -46,6 +47,7 @@ public class PercepcionCaperucita extends Perception {
         this.setPosicionFlores(ambienteCaperucita.getPosicionFlores());
         this.setSensorColumna(ambienteCaperucita.getColumna(columna));
         this.setSensorFila(ambienteCaperucita.getFila(fila));
+        this.setPosicionCaperucita(estadoAmbiente.getPosicionAgente());
     }
 
     @Override
@@ -119,5 +121,11 @@ public class PercepcionCaperucita extends Perception {
         this.cantidadDulces = cantidadDulces;
     }
 
+    public void setPosicionCaperucita(int[] posicionCaperucita) {
+        this.posicionCaperucita = posicionCaperucita;
+    }
 
+    public int[] getPosicionCaperucita() {
+        return this.posicionCaperucita;
+    }
 }
