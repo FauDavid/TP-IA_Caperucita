@@ -36,11 +36,96 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         }
 
         escenario1();
+        //escenarioPrueba();
         //escenario2();
         //escenario3();
 
         this.setCantidadVidasAgente(3);
         this.setCantidadDulcesAgente(0);
+    }
+
+    private void escenarioPrueba() {
+
+        //Escenario 1
+        bosque[1][3] = PercepcionCaperucita.PERCEPCION_FLORES;
+        bosque[1][4] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[1][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[1][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[1][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[1][9] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[1][10] = PercepcionCaperucita.PERCEPCION_DULCE;
+
+        bosque[2][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][5] = PercepcionCaperucita.PERCEPCION_DULCE;
+        bosque[2][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][7] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][9] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][11] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[3][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][4] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][7] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][8] = PercepcionCaperucita.PERCEPCION_DULCE;
+        bosque[3][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[3][11] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[4][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][6] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][7] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][9] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[4][11] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[5][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][6] = PercepcionCaperucita.PERCEPCION_LOBO;
+        bosque[5][7] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][9] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[5][11] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        //  bosque[6][4] = PercepcionCaperucita.PERCEPCION_LOBO;
+        bosque[6][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[6][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[7][3] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[7][4] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[7][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[7][7] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[7][8] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[7][9] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[7][10] = PercepcionCaperucita.PERCEPCION_VACIO;
+
+        bosque[8][9] = PercepcionCaperucita.PERCEPCION_PIEDRA;
+
+        this.setPosicionAgente(new int[]{5, 11});
+        this.setPosicionFlores(new int[]{1, 3});
+        this.setPosicionLobo(new int[]{5,6});
+
+        /*
+        Random rand = new Random();
+        int fil = rand.nextInt(9);
+        int col = rand.nextInt(14);
+        bosque[fil][col] = PercepcionCaperucita.PERCEPCION_LOBO;
+        this.setPosicionLobo(new int[]{fil,col});
+        */
+
+        /*
+        bosque[5][8] = PercepcionCaperucita.PERCEPCION_LOBO;
+        this.setPosicionLobo(new int[]{5,8});
+        */
+
+        /*
+        bosque[5][6] = PercepcionCaperucita.PERCEPCION_LOBO;
+        this.setPosicionLobo(new int[]{5,6});
+         */
+
+        this.setBosque(bosque);
     }
 
     private void escenario1() {
@@ -55,7 +140,7 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         bosque[1][10] = PercepcionCaperucita.PERCEPCION_DULCE;
 
         bosque[2][3] = PercepcionCaperucita.PERCEPCION_VACIO;
-        bosque[2][5] = PercepcionCaperucita.PERCEPCION_VACIO;
+        bosque[2][5] = PercepcionCaperucita.PERCEPCION_DULCE;
         bosque[2][6] = PercepcionCaperucita.PERCEPCION_VACIO;
         bosque[2][7] = PercepcionCaperucita.PERCEPCION_VACIO;
         bosque[2][8] = PercepcionCaperucita.PERCEPCION_VACIO;
@@ -87,7 +172,7 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         bosque[5][10] = PercepcionCaperucita.PERCEPCION_VACIO;
         bosque[5][11] = PercepcionCaperucita.PERCEPCION_VACIO;
 
-        bosque[6][4] = PercepcionCaperucita.PERCEPCION_LOBO;
+        bosque[6][4] = PercepcionCaperucita.PERCEPCION_VACIO;
         bosque[6][3] = PercepcionCaperucita.PERCEPCION_VACIO;
         bosque[6][8] = PercepcionCaperucita.PERCEPCION_VACIO;
         bosque[6][10] = PercepcionCaperucita.PERCEPCION_VACIO;
@@ -105,15 +190,18 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         this.setPosicionAgente(new int[]{5, 11});
         this.setPosicionFlores(new int[]{7, 7});
         this.setPosicionLobo(new int[]{6,4});
-        this.setBosque(bosque);
 
-        /*
         Random rand = new Random();
         int fil = rand.nextInt(9);
         int col = rand.nextInt(14);
         bosque[fil][col] = PercepcionCaperucita.PERCEPCION_LOBO;
         this.setPosicionLobo(new int[]{fil,col});
-        */
+        if(fil == posicionFlores[0] && col==posicionFlores[1]){
+            int fil2 = rand.nextInt(9);
+            int col2 = rand.nextInt(14);
+            bosque[fil2][col2] = PercepcionCaperucita.PERCEPCION_LOBO;
+            this.setPosicionLobo(new int[]{fil2,col2});
+        }
 
         /*
         bosque[5][8] = PercepcionCaperucita.PERCEPCION_LOBO;
@@ -125,6 +213,7 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
         this.setPosicionLobo(new int[]{5,6});
          */
 
+        this.setBosque(bosque);
     }
 
     private void escenario2() {
@@ -356,7 +445,5 @@ public class EstadoAmbienteCaperucita extends EnvironmentState {
     public void setCantidadDulcesAgente(int cantidadDulcesAgente) {
         this.cantidadDulcesAgente = cantidadDulcesAgente;
     }
-
-
 
 }
