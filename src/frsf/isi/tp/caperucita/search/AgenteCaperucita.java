@@ -26,11 +26,11 @@ public class AgenteCaperucita extends SearchBasedAgent {
         this.setAgentState(estado);
 
         Vector<SearchAction> operadores = new Vector<SearchAction>();
-        operadores.addElement(new TomarDulce());
-        operadores.addElement(new MoverseIzquierda());
         operadores.addElement(new MoverseArriba());
-        operadores.addElement(new MoverseDerecha());
         operadores.addElement(new MoverseAbajo());
+        operadores.addElement(new MoverseDerecha());
+        operadores.addElement(new MoverseIzquierda());
+        operadores.addElement(new TomarDulce());
 
         EstadoCaperucita estadoCaperucita = (EstadoCaperucita) this.getAgentState();
         Problem problem = new Problem(objetivoCaperucita, estadoCaperucita, operadores);
@@ -65,7 +65,8 @@ public class AgenteCaperucita extends SearchBasedAgent {
          UniformCostSearch strategy = new UniformCostSearch(costFunction);
           */
 
-        BreathFirstSearch strategy = new BreathFirstSearch();
+        IStepCostFunction costFunction = new FuncionCosto();
+        UniformCostSearch strategy = new UniformCostSearch(costFunction);
 
         Search searchSolver = new Search(strategy);
 

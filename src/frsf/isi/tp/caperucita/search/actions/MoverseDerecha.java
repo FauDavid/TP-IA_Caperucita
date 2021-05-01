@@ -23,7 +23,7 @@ public class MoverseDerecha extends SearchAction {
         int cantidadAMoverse = estadoCaperucita.moverse(infoFila, columna, "DERECHA");
 
         if (cantidadAMoverse > 0) {
-            estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+            estadoCaperucita.incrementarMovimientosRealizados(1);
             columna = columna + cantidadAMoverse;
             estadoCaperucita.setPosicionColumna(columna);
 
@@ -52,7 +52,7 @@ public class MoverseDerecha extends SearchAction {
         int cantidadAMoverse = estadoCaperucita.moverse(infoFila, columna, "DERECHA");
 
         if (cantidadAMoverse > 0) {
-            estadoCaperucita.incrementarMovimientosRealizados(cantidadAMoverse);
+            estadoCaperucita.incrementarMovimientosRealizados(1);
             columna = columna + cantidadAMoverse;
             estadoCaperucita.setPosicionColumna(columna);
             estadoAmbiente.setPosicionAgente(new int[]{fila, columna});
