@@ -14,6 +14,7 @@ public class GUI extends JFrame {
         this.setVisible(true);
         this.setResizable(false);
         this.setContentPane(bosque);
+        setLocationRelativeTo(null);
     }
 
     public class Bosque extends JPanel {
